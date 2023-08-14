@@ -44,14 +44,7 @@ if(userData == null) return null;
     <div className="body-artist">
   
 
-      <div className="body__info_artists">
-        <img src={userData.profileimg} alt="" />
-        <div className="body__infoText_artist">
-          <strong>Artist</strong>
-          <h2>{userData.username}</h2>
-         
-        </div>
-      </div>
+      
 
       <BodyInfo art={userData.profileimg} info={'Artist'}  name={userData.username} title={''} />
 

@@ -21,6 +21,7 @@ import {
 
 const Landing = React.lazy(() =>  import("./pages/LandingPage"));
 const Player= React.lazy(() =>  import("./pages/musicComponents/Player"));
+const PlayerExplorer= React.lazy(() =>  import("./pages/musicComponents/PlayerExplore"));
 const ArtistPlayer= React.lazy(() =>  import("./pages/musicComponents/ArtistPlayer"));
 const Board= React.lazy(() =>  import("./pages/musicComponents/Board"));
 const Donate = React.lazy(() =>  import("./pages/Donate"));
@@ -195,7 +196,7 @@ const Routess = ({UserData}) =>{
             <Route path={"/song/:uniqId"} exact  element={<Player spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/create/post"} exact  element={<Post spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/artist/:user"} exact  element={<ArtistPlayer spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
-            <Route path={"/explore/:q"} exact  element={<Player spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
+            <Route path={"/explore/:q"} exact  element={<PlayerExplorer spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/Donate/:user"} exact userData={UserData.length > 0 ?UserData:[]} element={<Donate userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/Donate"} exact userData={UserData.length > 0 ?UserData:[]} element={<Donate userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/"} exact  element={<Board userData={UserData.length > 0 ?UserData:[]} />}  />
