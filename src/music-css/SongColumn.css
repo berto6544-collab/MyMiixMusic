@@ -1,0 +1,67 @@
+.songRow {
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  background-color: rgb(24, 24, 24);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.songRow:hover {
+  cursor: pointer;
+  background-color: black;
+  opacity: 0.8;
+  overflow: hidden;
+}
+.songRow:hover > .play{
+
+display: block;
+height: 50%;
+justify-content: center;
+padding-top: 50px;
+align-self: center;
+font-size: 70px;
+color: rgb(0, 123, 255);
+opacity: 1;
+
+
+}
+
+.play{
+display: block;
+height: 50%;
+justify-content: center;
+padding-top: 50px;
+align-self: center;
+font-size: 0px;
+color: rgb(0, 123, 255);
+opacity: 0;
+
+  transition: opacity 0.3s, font-size 0.1s;
+}
+
+.songRow__info {
+  margin-left: 20px;
+
+}
+
+.songRow__info > h1 {
+  font-weight: 600;
+  font-size: 16px;
+  padding: 10px;
+}
+
+.songRow__info > p {
+  font-size: 14px;
+  margin-top: 3px;
+  color: gray;
+}
+
+.songRow__album {
+  height: 160px;
+  width: 100%;
+  object-fit: cover;
+}

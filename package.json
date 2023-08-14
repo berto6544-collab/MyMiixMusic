@@ -1,0 +1,67 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.11.0",
+    "@mui/material": "^5.11.0",
+    "@stripe/react-stripe-js": "^1.16.1",
+    "axios": "^1.2.1",
+    "bootstrap": "^5.2.3",
+    "cli-progress": "^3.12.0",
+    "cra-template": "1.2.0",
+    "crypto-js": "^4.1.1",
+    "deepai": "^1.0.2",
+    "emotion": "^11.0.0",
+    "eslint-config-react-app": "^7.0.1",
+    "fireworks": "^2.2.7",
+    "font-awesome": "^4.7.0",
+    "ftp-deploy": "^2.4.3",
+    "js-cookie": "^3.0.1",
+    "jszip": "^3.10.1",
+    "lazysizes": "^5.3.2",
+    "next-share": "^0.19.0",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.7.0",
+    "react-dom": "^18.2.0",
+    "react-ffmpeg": "^0.0.35",
+    "react-helmet": "^6.1.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "react-jinke-music-player": "^4.24.2",
+    "react-player": "^2.12.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.14.2",
+    "react-scripts": "5.0.1",
+    "react-unity-webgl": "^9.4.3",
+    "reactjs-localstorage": "^1.0.1",
+    "readline": "^1.3.0",
+    "socket.io-client": "^4.5.4",
+    "web-vitals": "^3.1.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "set \"GENERATE_SOURCEMAP=false\" && react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

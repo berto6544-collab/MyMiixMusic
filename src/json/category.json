@@ -1,0 +1,34 @@
+{
+    "game_categories": [
+      "Action",
+      "Adventure",
+      "Role-Playing",
+      "Simulation",
+      "Strategy",
+      "Sports",
+      "Racing",
+      "Puzzle",
+      "Board",
+      "Card",
+      "Trivia",
+      "Educational",
+      "Word",
+      "Arcade",
+      "Platformer",
+      "Shooter",
+      "Fighting",
+      "Horror",
+      "Survival",
+      "Stealth",
+      "Music",
+      "Party",
+      "Casual",
+      "Idle",
+      "Clicker",
+      "Rhythm",
+      "Virtual Reality (VR)",
+      "Augmented Reality (AR)",
+      "Massively Multiplayer Online (MMO)"
+    ]
+  }
+  
