@@ -127,7 +127,7 @@ const readUser = () =>{
 API.API.readUser()
  .then(responseJSON =>{
 console.log(responseJSON)
-
+ 
   if(responseJSON.length > 0){
   setUserData(responseJSON)
   if(reactLocalStorage.getObject('user')){
