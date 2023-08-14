@@ -7,6 +7,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SongRow from "./SongRow";
 import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';
+import BodyInfo from "./BodyInfo";
 
 
 function Body({dataSource}) {
@@ -49,14 +50,8 @@ if(dataSource == null) return null;
     <div className="body-artist">
 
 
-      <div className="body__info">
-        <img src={dataSource.art} alt="" />
-        <div className="body__infoText">
-          <strong>PLAYLIST</strong>
-          <h2>{dataSource.SongData[Auth.songIndex].name}</h2>
-          <p>{dataSource.SongData[Auth.songIndex].artist}</p>
-        </div>
-      </div>
+      
+<BodyInfo art={dataSource.art} info={'PLAYLIST'}  name={dataSource.SongData[Auth.songIndex].name} title={''} />
 
       <div className="body__songs_artists">
         <div className="body__icons">
@@ -76,7 +71,7 @@ if(dataSource == null) return null;
 
             }}
           />
-          <FavoriteIcon fontSize="large" />
+          <FavoriteIcon style={{color:dataSource?.following == "0"?"white":"#007bff"}} fontSize="large" />
           <MoreHorizIcon />
         </div>
 

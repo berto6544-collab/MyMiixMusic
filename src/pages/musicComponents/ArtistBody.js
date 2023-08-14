@@ -6,6 +6,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SongRow from "./SongArtistRow";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthApi from "../../components/AuthApi";
+import BodyInfo from "./BodyInfo";
 
 
 function Body({dataSource,setItemSource,ScrollData,userData}) {
@@ -52,6 +53,8 @@ if(userData == null) return null;
         </div>
       </div>
 
+      <BodyInfo art={userData.profileimg} info={'Artist'}  name={userData.username} title={''} />
+
       <div className="body__songs_artists">
         <div className="body__icons">
           <PlayCircleFilledIcon
@@ -68,7 +71,7 @@ if(userData == null) return null;
             }}
             
           />
-          <FavoriteIcon fontSize="large" />
+          <FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />
           <MoreHorizIcon />
         </div>
 
