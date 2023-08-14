@@ -8,7 +8,7 @@ MyMiixMusic Upload & Stream Music on MyMiix Music
 Post & Share your Music through MyMiix Music!
 
 ### `Stream`
-Stream music & find Artist accross world!
+Stream music & find artist's across the world!
 
 ### `Stream Ads`
 Artist can run ads on MyMiix Music to make revenue!

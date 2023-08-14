@@ -26,8 +26,7 @@ const [hasMore,setHasMore] = React.useState(false)
 
 React.useEffect(()=>{
 
-fetch('https://music.mymiix.com/api/MusicDataUser?user='+user+'&start='+start)
-.then(res=>res.json())
+API.API.MusicDataUser(user,start)
 .then(response=>{
 
 
@@ -75,8 +74,7 @@ const hadleModify = (item) =>{
 
 const ScrollData = () =>{
 
-  fetch('https://music.mymiix.com/api/MusicDataUserScroll?user='+user+'&start='+start)
-.then(res=>res.json())
+API.API.MusicDataUserScroll(user,start)
 .then(response=>{
 
 if(response.length > 0){ 

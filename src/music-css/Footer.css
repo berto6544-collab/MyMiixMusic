@@ -7,7 +7,7 @@
   height: 100px;
   overflow: hidden;
   width: 100%;
-  background-color: #151515;
+  background-color: black;
   transition: height 0.2s ease-out;
 }
 
@@ -21,7 +21,7 @@
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  background-color: #151515;
+  background-color: black;
   transition: height 0.2s ease-out;
   z-index: 100;
 

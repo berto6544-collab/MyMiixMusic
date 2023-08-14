@@ -114,13 +114,6 @@ const readCookie = () =>{
 }
 
 
-
-
-document.addEventListener('DOMContentLoaded',function(event){
-    setloading(true)
-
-
-})
  
 
 const readUser = () =>{

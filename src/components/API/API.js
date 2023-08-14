@@ -17,7 +17,7 @@ const MusicDataUniq = async(uniqId) =>{
 }
 
 const readUser = async() =>{
-    const data = await  fetch(process.env.REACT_APP_API+'/userData',{
+    const data = await  fetch('https://music.mymiix.com/api/userData',{
      method:'GET',
     })
     .then(res=>res.json())
@@ -25,11 +25,28 @@ const readUser = async() =>{
 return data;
 }
 
+const MusicDataUser  = async(user,start) =>{
+
+  const data =  fetch('https://music.mymiix.com/api/MusicDataUser?user='+user+'&start='+start)
+.then(res=>res.json())
+
+return data;
+}
+
+const MusicDataUserScroll = async(user,start) =>{
+
+    const data = fetch('https://music.mymiix.com/api/MusicDataUserScroll?user='+user+'&start='+start)
+    .then(res=>res.json())
+
+    return data
+}
 
 
 const API = {
     MusicData,
     MusicDataUniq,
+    MusicDataUser,
+    MusicDataUserScroll,
     readUser
 }
 

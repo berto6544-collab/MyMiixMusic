@@ -6,6 +6,7 @@ import SkipNextIcon from "@mui/icons-material/SkipNext";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import VolumeDownIcon from "@mui/icons-material/VolumeDown";
+import VolumeMuteIcon from "@mui/icons-material/VolumeMute";
 import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import "../../music-css/Footer.css";
@@ -27,6 +28,7 @@ const [duration, setDuration] = useState(0);
 const [sound, setSound] = useState(1);
 const [loop, setLoop] = useState(false);
 const [expand, setExpand] = useState(false);
+const [isMuted, setisMuted] = useState(false);
 const [expandPlaylist, setExpandPlaylist] = useState(false);
   const audioRef = React.useRef(null);
 
@@ -144,6 +146,20 @@ const handleTimeUpdate = () => {
   setCurrentTime(audioRef.current.currentTime);
   setDuration(audioRef.current.duration);
 };
+
+const handleOnVolumeChange = () =>{
+
+  if(audioRef.current.muted || audioRef.current.volume === 0){
+    setisMuted(true)
+
+  } else if(!audioRef.current.muted){
+    setisMuted(false)
+    setSound(audioRef.current.volume)
+
+  }
+
+}
+
 
 const handleLoop = () =>{
 
@@ -302,14 +318,18 @@ function formatDuration(durationSeconds) {
             
           </Grid>
           <Grid item>
-            <VolumeDownIcon />
+            {!isMuted?<VolumeDownIcon />:<VolumeMuteIcon />}
           </Grid>
           <Grid item xs>
-            <Slider defaultValue={100}  value={sound}
+            <input type={'range'} defaultValue={1} style={{width:'100%'}} min={0} max={1} step={0.01} value={sound}
             onChange={(e)=>{
-              setSound(e.target.value / 100)
-              audioRef.current.volume = e.target.value / 100;
-             
+              setSound(Number(e.target.value))
+              audioRef.current.volume = Number(e.target.value);
+              if(audioRef.current.volume === 0){
+                audioRef.current.muted = true;
+              }else{
+                audioRef.current.muted = false;
+              }
 
             }}
             aria-labelledby="continuous-slider" />
@@ -357,12 +377,7 @@ function formatDuration(durationSeconds) {
       }}
 
       
-      onLoadStart={()=>{
-        audioRef.current.addEventListener("timeupdate", handleTimeUpdate);
-        return () => {
-          audioRef.current.removeEventListener("timeupdate", handleTimeUpdate);
-        };
-      }}
+      
       autoPlay={playingg} ref={audioRef} onEnded={(e)=>{
 
        if(!loop) return skipNext();
@@ -372,7 +387,8 @@ function formatDuration(durationSeconds) {
       }} 
       
       
-      //onTimeUpdate={handleTimeUpdate}
+      onTimeUpdate={handleTimeUpdate}
+      onVolumeChange={handleOnVolumeChange}
       volume={sound}
       loop={loop} playing={playingg} playsInline={true} src={itemSource[Auth.songIndex]?.musicSrc} >
         {itemSource.map((post,i)=>{return(<source key={i} src={post?.musicSrc}  />)})}
