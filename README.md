@@ -10,5 +10,8 @@ Post & Share your Music through MyMiix Music!
 ### `Stream`
 Stream music & find artist's across the world!
 
+
+## `Todos` 
+
 ### `Stream Ads`
 Artist can run ads on MyMiix Music to make revenue!

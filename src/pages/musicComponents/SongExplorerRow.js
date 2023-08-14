@@ -1,7 +1,8 @@
 import React from "react";
-import "../../music-css/SongRow.css";
+
 import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';
+import '../../music-css/SongColumn.css'
 
 function SongRow({item,dataSource,setItemSource,q,index,setIndex}) {
   const Auth = React.useContext(AuthApi)

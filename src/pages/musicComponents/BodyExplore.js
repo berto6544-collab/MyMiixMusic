@@ -9,6 +9,7 @@ import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import InfiniteScroll  from "react-infinite-scroll-component";
 import BodyInfo from "./BodyInfo";
+import '../../music-css/SongColumn.css'
 
 
 
@@ -64,6 +65,7 @@ info={''}  name={q} title={''} />
 
       <InfiniteScroll 
 dataLength={dataSource.length}
+className={'grid'}
 style={{ width:"100%" }} //To put endMessage and loader to the top.
 inverse={false}
 hasMore={true}
