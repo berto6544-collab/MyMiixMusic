@@ -60,11 +60,11 @@ if(dataSource == null) return null;
             onClick={()=>{
               
 
-              Auth.setItemSongSource(hadleModify(dataSource))
+             Auth.setItemSongSource(hadleModify(dataSource))
      
      
       
-     Auth.setItemSongSource(hadleModify(dataSource.SongData[0]))
+     //Auth.setItemSongSource(hadleModify(dataSource.SongData[0]))
      Auth.setIndex(0)
      Auth.setSongIndex(0)
      Auth.setPlaying(true)

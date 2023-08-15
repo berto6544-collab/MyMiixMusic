@@ -219,10 +219,10 @@ const onClicks = () =>{
             </div>
             
             
-            <a  onClick={()=>{
+            {<a  onClick={()=>{
 
               window.location.href = "/create/post"
-            }} style={{color:'rgb(0, 123, 255)',fontWeight:'bold',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'white',borderRadius:30 }} >Upload</a>
+            }} style={{color:'rgb(0, 123, 255)',fontWeight:'bold',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'white',borderRadius:30 }} >Upload</a>}
             
 
 

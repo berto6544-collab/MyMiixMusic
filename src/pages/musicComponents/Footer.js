@@ -36,6 +36,17 @@ React.useEffect(()=>{
 
 
 
+  document.addEventListener("DOMContentLoaded", function() {
+   
+
+    // Prevent the default behavior of the link and continue playing the audio
+      audioRef.current.addEventListener("click", function(event) {
+        event.preventDefault();
+        audioRef.current.play();
+    });
+});
+
+
   //setPlayingg(playing)
   if(audioRef.current != null){
   audioRef.current.addEventListener("timeupdate", handleTimeUpdate);

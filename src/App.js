@@ -173,7 +173,7 @@ React.useEffect(() =>{
         
          
         
-         <Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} /> 
+         {window.location.href == "https://"+window.location.host+"/create/post"?null:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />} 
         </AuthApi.Provider>
         </Elements>
 

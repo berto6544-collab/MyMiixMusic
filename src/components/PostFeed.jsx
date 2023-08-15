@@ -3,7 +3,7 @@ import '../css/Login.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Cookies from 'js-cookie';
-import {Button,LinearProgress,Typography,Box,FormControl,InputLabel,CircularProgress,OutlinedInput,TextField,IconButton,InputAdornment,Icon,FilledInput,Dialog,FormControlLabel,FormLabel,RadioGroup,Radio,Select,MenuItem,Checkbox} from '@mui/material/';
+import {FormControl,InputLabel,CircularProgress,OutlinedInput,TextField,IconButton,InputAdornment,Icon,FilledInput,Dialog,FormControlLabel,FormLabel,RadioGroup,Radio,Select,MenuItem,Checkbox} from '@mui/material/';
 import {Container,Card,Badge} from 'react-bootstrap';
 import {Videocam,Filter,Event,LibraryMusic,Close} from '@mui/icons-material';
 
@@ -19,10 +19,7 @@ import Preview from '../preview-url/src/previewPostFeed';
 import PreviewPost from '../preview-url/src/previewPostYoutube';
 import MetaTags from '../react-meta-tags/src/meta_tags';
 import PreviewMusic from '../preview-url/src/PreviewMusiic';
-import SmallDialog from '../dialog-components/DialogSmalll';
 import 'react-jinke-music-player/assets/index.css'
-import ReactJkMusicPlayer from 'react-jinke-music-player';
-import FullDialogAudio from '../dialog-components/DialogFullAudio';
 import '../css/ReactMusicPlayer.css';
 import AuthApi from "./AuthApi";
 
@@ -30,7 +27,10 @@ import AuthApi from "./AuthApi";
 import axios from 'axios';
 
 import * as Themes from '../Utility/Theme';
-//import uploadIcon from '../assets/upload.jpg'
+import Progress from './ProgressBar';
+import ChooseType from './ChooseType';
+import FileUploaded from './UploadFile';
+
 
 
 
@@ -57,7 +57,7 @@ function PostFeed(props) {
   const Auth = React.useContext(AuthApi);
     const [title,setTitle] = React.useState('');
     const [descript,setDescription] = React.useState('');
-    const [catagory,setCatergory] = React.useState('');
+    const [catagory,setCatergory] = React.useState('Music');
     const [image,setImage] = React.useState('');
     const [FileArray,setFileArray] = React.useState([]);
     const [FileSampleArray,setFileSampleArray] = React.useState(null);
@@ -80,8 +80,10 @@ function PostFeed(props) {
     const [file, setFile] = React.useState('')
     const [contributor, setContribute] = React.useState('');
     const [MinDate, setMinDate] = React.useState('');
+    const [typeFunction,setTypeFunction] = React.useState('');
     const [Amount, setAmount] = React.useState('0.00')
     const[fileType,setFileType] = React.useState('');
+    const [steps,setSteps] = React.useState(0);
     const[TypeFile,setTypeFile] = React.useState('');
     const[showForm,setShowForm] = React.useState(false)
     const [type,setType] = React.useState('image')
@@ -102,54 +104,7 @@ function PostFeed(props) {
 
 
 
-    function capture(){
-      if(fileName.match(/^.*\.(mp4|avi|MOV|mov|mkv)$/)){
-        var img1 = document.getElementById("logoId");
-      
-        //setImage(URL.createObjectURL(inputRef.current.files[0]));
-      var canvas = document.getElementById('canvas');
-      var video = document.getElementById('video');
-      let w = video.videoWidth;
-      let h = video.videoHeight;
-      let logoResizedHeight;
-      let logoResizedWidth;
-      canvas.width  = w;
-      canvas.height = h;
-      if(h > w){
-      logoResizedHeight = h /10
-      logoResizedWidth = w / 2
-      }else{
-        logoResizedHeight = h /1 * 0.2
-        logoResizedWidth = w / 2
-
-      }
-
-      const posX = (video.videoWidth - logoResizedWidth) / 2
-      const posY = (video.videoHeight - logoResizedHeight) / 2
-
-      canvas.getContext('2d').drawImage(video, 0, 0,w, h);
-      canvas.getContext('2d').drawImage(img1,10,50,logoResizedWidth,logoResizedHeight)
-      
-
-      canvas.toBlob( (blob) => {
-       
-
-        var fileNamme = (Math.random() + 1).toString(36).substring(7)+"."+"jpeg";
-
-        var file = new File([blob],fileNamme,{ type: "image/jpeg" })
-        setDataFileType(file)
-        setDataNameType(fileNamme)
-        console.log(file)
-        
-
-      }, "image/jpeg", 1 );
     
-     // setDataURLType(data);
-
-      
-      }
-  
-    }
 
     const pressFull = (data) =>{
       setSong(data)
@@ -202,6 +157,92 @@ function PostFeed(props) {
 }
   
   
+
+const handleOnChange = async(img) =>{
+
+  if(img.target.files.length <= 10 ){
+
+    let pushSongName = [];
+    
+    setImage(URL.createObjectURL(inputRef.current.files[0]));
+  setfileName(inputRef.current.files[0].name);
+  setFileArray([...inputRef.current.files])
+  console.log(inputRef.current.files[0]);
+  
+  setFile(inputRef.current.value);
+  setFileType(inputRef.current.files[0].type)
+  
+  
+  for (var i = 0; i < img.target.files.length; i++) {
+    console.log(img.target.files[i].name);
+
+    let typefile = img.target.files[i].name.substring(img.target.files[i].name.lastIndexOf('.') + 1, img.target.files[i].name.length);
+    console.log(typefile);
+    setTypeFile('.'+typefile)
+    let fille = URL.createObjectURL(img.target.files[i]);
+
+ 
+
+    
+
+
+      
+      pushSongName.push({
+        name: img.target.files[i].name.slice(0,img.target.files[i].name.lastIndexOf('.'+typefile)),
+        musicSrc: fille,
+        type: 'audio',
+        artist: '',
+        tag: '',
+        constributingArtist:'',
+        genre:  '',
+        Cover:'',
+        duration:'',
+      })
+
+   
+      
+
+
+    
+}
+
+
+console.log(pushSongName)
+
+  setSongName([...pushSongName])
+  setShowForm(true)
+  
+  setStat('')
+
+
+
+  
+if(!ios){
+  await FFMPEG.process(
+    img.target.files[0],
+    '-metadata location="" -metadata location-eng="" -metadata author="" -t 30 -c:v copy -c:a copy',
+    function (e) {
+      const video = e.result;
+      //console.log(e);
+      var fileNamme = video.name;
+      
+      setFileSampleArray(video)
+      setFileSample(URL.createObjectURL(video))
+      setFileVideoSample(null)
+  
+    }.bind(this));
+
+}else{
+  
+  setStat('You cant upload more than 10 audio files')
+
+}
+
+  }
+}
+
+
+
 
 
 const handleClear = () =>{
@@ -324,7 +365,7 @@ else{
           
         
 
-     const datta = await axios.post('https://music.mymiix.com/ReactPost.php?id='+Cookies.get('userId'),formData,{
+     const datta = await axios.post('https://music.mymiix.com/ReactPost.php?id='+props.userData[0].UserId,formData,{
      
           onUploadProgress:  progressEvent => {
             
@@ -391,750 +432,62 @@ const handleClose = () =>{
 
     return ( 
     <div style={{width:'100%',margin:0,height:'100vh',position:'relative',padding:0}}>
-{isLoadingSpinner == true ?<div style={{position:'absolute',backgroundColor:'rgba(0,0,0,0.8)',zIndex:100,alignItems:'center',width:'100%',height:'150vh',display:'flex',flexDirection:'column',justifyContent:'center'}}>
-      <CircularProgress  />
 
-      </div>:null}
-      <div style={{width:'100%',position:'relative',paddingLeft:15,paddingRight:15}}>
-{isLoading ?<Box style={{position:'fixed',backgroundColor:'white',padding:10,top:0,zIndex:80,display:"flex",alignItems:'center', width:"100%"}} >
-      <Box  width={'100%'} >
-      <LinearProgress variant={"determinate"}  value={percentagge} style={{height:10}} />
-      </Box>
-      {<Box minWidth={35}>
-        {<Typography variant="body2" color="textSecondary">{percentagge+'%'}</Typography>}
-      </Box>}
-    </Box>:<></> }
+      
+
+      <Progress percentagge={percentagge} isLoading={isLoading} />
 
     <Container style={{marginTop:'60px',width:'100%',position:'relative'}}  className="Container"> 
     <MetaTags>
-            <title>{isLoading? 'MyMiix - Progress '+percentagge+'%' : 'MyMiix - Create your post'}</title>
+            <title>{isLoading? 'MyMiix - Progress '+percentagge+'%' : 'MyMiix - Uploade Your Music'}</title>
            
 
-</MetaTags>
+    </MetaTags>
+
         <div style={{width:'100%',alignItems:'center',position:'relative',justifyContent:'center',alignContent:'center',overflowX:'hidden'}}>
-        <b>Create a Post</b>
-      
         
 
         <FormControl style={{width:'100%',marginTop:'20px',backgroundColor:Themes['dark'].BackgroundColorTheme}} variant="standard" >
-      
         
+        <ChooseType setDescription={setDescription} setTitle={setTitle} setTypeFunction={setTypeFunction} />
 
-
-      <TextField
-          id="filled-multiline-static"
-          label="Post Title (required)"
-          multiline
-          style={{width:'100%',color:Themes['dark'].Color,backgroundColor:Themes['dark'].BackgroundColorTheme}}
-          rows={4}
-          inputProps={{style:{color:Themes['dark'].Color}}}
-          InputLabelProps={{style:{color:Themes['dark'].Color}}}
-          onChange={(value)=>setTitle(value.target.value)}
-          variant="outlined"
-        />
-      </FormControl>
-
-
-      <FormControl style={{width:'100%',marginTop:'20px',backgroundColor:Themes['dark'].BackgroundColorTheme}} variant="standard" >
-      
-
-
-  
-
-      <TextField
-          id="filled-multiline-static"
-          label="Post Description"
-          multiline
-          style={{width:'100%',color:Themes['dark'].Color,backgroundColor:Themes['dark'].BackgroundColorTheme}}
-          rows={4}
-          inputProps={{style:{color:Themes['dark'].Color}}}
-          InputLabelProps={{style:{color:Themes['dark'].Color}}}
-          onChange={async(value)=>{
-            
-            
-            setDescription(value.target.value)
+        {typeFunction != "" && typeFunction == "Upload"?<div style={{width:'100%',padding:10,position:'relative'}}>
+        <b>Write Album Title*</b>
           
+          <input value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
+        <input type={'file'} onChange={handleOnChange} multiple accept='.mp3,.wav,.m4a'  ref={inputRef} style={{display:'none'}} />
+        <FileUploaded inputRef={inputRef} />
 
-            if(fileName == ""){
+        </div>:
+        typeFunction != "" && typeFunction != "Upload"?
+        <div style={{width:'100%',padding:10}}>
+          <b>Write Title*</b>
+          
+          <input value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
+          <b>Add {typeFunction} Link*</b>
+          
+          <input value={descript} onChange={(e)=>setDescription(e.target.value)} style={{width:'100%',padding:10}} />
 
-           
+          <div style={{width:'100%',display:'flex',alignItems:'center',flexDirection:'column'}}>
+          <b>Preview</b>
 
-          }
-          }}
-          variant="outlined"
-        />
+          {UrlForMedia(descript,fileName,setURLARRAY)}
 
+          </div>
+          
+          </div>:null
+        
+        
+        }
 
-
-
-
-      </FormControl>
-
-
-       
-<img id={'logoId'} src={'https://mymiix.com/public/assets/img/mymiix-white.png'}  style={{position:'absolute',display:'none',zIndex:20,top:5,left:5}} width={'300px'} height={'90px'} />
-
-<FormControl style={{width:'100%',marginTop:'20px'}}>
-<InputLabel id="label">Category</InputLabel>
-<Select labelId="label" variant={'outlined'} id="select" displayEmpty  defaultValue={""} style={{backgroundColor:Themes['dark'].BackgroundColorTheme,color:Themes['dark'].Color,marginBottom:20}} onChange={(value)=>{
-  setCatergory(value.target.value)
-  
-  }}>
-  <MenuItem name={'Choose Category'}  value="">Choose Category</MenuItem>
-  <MenuItem name={'Music'} value="Music">Music</MenuItem>
-  
-</Select>
-
-
-
-
-
-{file != "" && FileArray.length > 0 ?<div style={{width:'100%',display:'flex',flexDirection:'column',marginBlock:'20px'}}>
-  
-<b style={{color:Themes['dark'].Color}}>Choose Public Or Subscribers To See Your Post</b>
-  <FormControl style={{marginTop:10}}  variant="outlined">
-
-
-<Select labelId="label" id="select" displayEmpty defaultValue={""} color={Themes['dark'].Color} style={{backgroundColor:Themes['dark'].BackgroundColorTheme,color:Themes['dark'].Color}}  onChange={(value)=>{setContribute(value.target.value) }}>
-  <MenuItem    value="">Public</MenuItem>
-  {userAuthAccount.match(/acct\_([a-zA-Z0-9_]+)/) ?<MenuItem name={'Contributor'} value="Contributor">Subscribers</MenuItem>:null}
-  {userAuthAccount.match(/acct\_([a-zA-Z0-9_]+)/) ?<MenuItem name={'Contributor'} value="Donor">Sell content</MenuItem>:null}
-  <MenuItem   value="ShareToView">Share to View</MenuItem>
-</Select>
-
-</FormControl></div>:null}
-
-{contributor == "Donor" ?
-
-<FormControl style={{marginTop:10,backgroundColor:Themes['dark'].BackgroundColorTheme,color:Themes['dark'].Color}}  variant="outlined">
-          <InputLabel style={{color:Themes['dark'].Color}} htmlFor="outlined-adornment-amount">Amount</InputLabel>
-          <OutlinedInput
-            id="outlined-adornment-amount"
-            value={Amount}
-            style={{color:Themes['dark'].Color}}
-            color={Themes['dark'].Color}
-            onChange={(value)=>{
-              setAmount(value.target.value)
-              
-              }}
-            startAdornment={<InputAdornment style={{color:Themes['dark'].Color}} position="start">$</InputAdornment>}
-            labelWidth={60}
-          />
+        
+      
         </FormControl>
-            :null }
-
-
-
-
-<div style={{flexDirection:'row', display:'flex',alignItems:'center', width:'100%', justifyContent:'space-between',marginBottom:20}}>
-  <div style={{flexDirection:'row', display:'flex',alignItems:'center'}}>
-
-  
-
-
-
-
-  <input  name={'postimg'} accept={'.mp3,.m4a,.wav'}  style={{display:'none'}}  multiple={true} ref={inputRef}  onChange={async(img)=>{
-
-    
-    if(img.target.files.length <= 10 ){
-
-      let pushSongName = [];
       
-      setImage(URL.createObjectURL(inputRef.current.files[0]));
-    setfileName(inputRef.current.files[0].name);
-    setFileArray([...inputRef.current.files])
-    console.log(inputRef.current.files[0]);
-    
-    setFile(inputRef.current.value);
-    setFileType(inputRef.current.files[0].type)
-    
-    
-    for (var i = 0; i < img.target.files.length; i++) {
-      console.log(img.target.files[i].name);
-
-      let typefile = img.target.files[i].name.substring(img.target.files[i].name.lastIndexOf('.') + 1, img.target.files[i].name.length);
-      console.log(typefile);
-      setTypeFile('.'+typefile)
-      let fille = URL.createObjectURL(img.target.files[i]);
-
-   
-
-      
-
-
-        
-        pushSongName.push({
-          name: img.target.files[i].name.slice(0,img.target.files[i].name.lastIndexOf('.'+typefile)),
-          musicSrc: fille,
-          type: 'audio',
-          artist: '',
-          tag: '',
-          constributingArtist:'',
-          genre:  '',
-          Cover:'',
-          duration:'',
-        })
-
-     
-        
-
-
-      
-  }
-
- 
-console.log(pushSongName)
-
-    setSongName([...pushSongName])
-    setShowForm(true)
-    
-    setStat('')
-
-
-    
-    
-
-    
-  if(!ios){
-    await FFMPEG.process(
-      img.target.files[0],
-      '-metadata location="" -metadata location-eng="" -metadata author="" -t 30 -c:v copy -c:a copy',
-      function (e) {
-        const video = e.result;
-        //console.log(e);
-        var fileNamme = video.name;
-        
-        setFileSampleArray(video)
-        setFileSample(URL.createObjectURL(video))
-        setFileVideoSample(null)
-    
-      }.bind(this));
-
-  }else{
-    
-    setStat('You cant upload more than 10 audio files')
-
-  }
-
-    }
-
-    
-    }} id="icon-button-file" type={"file"} />
-
-
-<div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-      <label style={{display:'flex',flexDirection:'row',alignItems:'center'}} htmlFor="icon-button-file">
-        
-        
-        
-
-        <Tooltip title={'Audio files'}>
-        <IconButton  onClick={()=>{
-          setImage("");
-          setfileName("");
-          setFile("");
-          setContribute("");
-          setAmount('0.00');
-          setFileArray([]);
-          setStat('');
-          setDataURLType('');
-          setURLARRAY([])
-          setDataFileType(null);
-          setDataNameType("");
-          setVideoFileLoad(false)
-          setSong([])
-          setType("audio")
-          setFileVideoSample(null)
-          setFileSample(null)
-          setFileSampleArray(null)
-          setFileArray([])
-          setSongName([])
-         
-
-        }} color="primary" aria-label="upload picture" component="span">
-          <LibraryMusic style={{color:'#007bff'}} />
-        </IconButton>
-        </Tooltip>
-        
-       
-      </label>
-
-      {FileArray.length > 0 && !fileName.match(/^.*\.(mp3|wav|WAV|m4a)$/)?<Tooltip title={'Clear Files '}><Button  style={{backgroundColor:'#007bff',color:'white'}} onClick={(e)=>{
-         
-         setImage("");
-         setfileName("");
-         setFile("");
-         setContribute("");
-         setAmount('0.00');
-         setFileArray([])
-         setDataURLType("");
-         setDataFileType(null);
-         setStat('');
-         setURLARRAY([])
-         setDataNameType("");
-         setVideoFileLoad(false)
-         setSong([])
-         setFileVideoSample(null)
-         setFileSample(null)
-         setFileSampleArray(null)
-         setFileArray([])
-
-         setType("audio")
-         setSongName([])
-       
-        
-
-       }}  >Clear</Button></Tooltip>:null}
-
-{FileArray.length > 0 && fileName.match(/^.*\.(mp3|wav|WAV|m4a)$/) ?
-
-<label style={{display:'flex',flexDirection:'row',alignItems:'center'}} ><Tooltip title={'Album List '}><IconButton  color="primary" aria-label="Album List" component="span"  onClick={(e)=>{
-         
-         setShowForm(true)
-       
-        
-
-       }}  ><i style={{color:'#007bff',fontSize:23}} class="fa fa-list"></i></IconButton></Tooltip></label>:null
-
-}
-
-      </div>
-</div>
-
-<SmallDialog  setshow={setShowDate}  isOpen={showDate}  Title={'Schedule Date'} 
-Data={<div style={{width:'100%',display:'flex',flexDirection:'column'}}>
-<input value={statDate} style={{border:'1px solid rgb(240, 244, 248)',padding:10,borderRadius:5,backgroundColor:'rgb(240, 244, 248)'}}  name={'postimgggg'} min={MinDate} onChange={(e)=>{
-setDate(e.target.value);
-
-
-console.log(e.target.value)
-}} type={'datetime-local'}     />
-<div style={{display:'flex',width:'100%',alignItems:'center',flexDirection:'row',justifyContent:'space-evenly'}}>
-
-<Button  onClick={()=>{
-setShowDate(false)
-
-}} >OK</Button>
-<Button onClick={()=>{
-setShowDate(false)
-
-}} >Cancel</Button>
-
-</div>
-
-
-
-  </div>} />
-
-<div style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-
-
-
-
-
-<label style={{display:'flex',flexDirection:'row',alignItems:'center'}} >
-  <Tooltip title={'schedule date'} >
-<IconButton  onClick={()=>{
-          
-          setShowDate(true)
-        }} color="primary" aria-label="upload picture" component="span">
-          <Event style={{color:'#007bff'}} />
-        </IconButton>
-        </Tooltip>
-
-
-        
-</label>
-<label style={{display:'flex',flexDirection:'row',alignItems:'center'}}>
-
-<Button
-        variant="contained"
-        color="primary"
-        className={''}
-        style={{backgroundColor:'#007bff',color:'white'}}
-        type={'submit'}
-        onClick={()=>{
-          var result = title.matchAll(/((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/gi);
-
-        if(descript != "" && title != "" ){
-          
-          if(Array.from(result).length > 0){
-            setStat('Title cant have a link in it!')
-            
-          }
-          else {
-     
-            
-
-
-          if(!fileName.match(/^.*\.(mp3|wav|WAV|m4a)$/) || fileName == "") {
-          handleOnClick();
-          
-        }
-        else{
-
-        if(inputReff.current.files.length > 0){
-          handleOnClick();
-        }else{
-
-          setStat('Album cover is required')
-        }
-
-
-        }
-      
-
-      
-      }
-
-    }else{
-      setStat('Title or description is empty')
-    }
-
-       }}
-
-      >
-        Post
-      </Button>
-</label>
-
-      </div>
-      
-
-</div>
-
-
-
-<b style={{alignSelf:'center'}}>{stat}</b>
-</FormControl>
-
-
-<FullDialogAudio 
-isOpen={showForm}
-Data={
-<div style={{width:'100%',padding:10,position:'relative'}}>
- <h3>Add Your Cover Art</h3> 
-
- <div style={{width:'100%',padding:10,paddingBottom:20,display:'flex',flexDirection:'column',position:'relative',borderBottom:'1px solid lightgrey'}}>
- <div style={{width:'100%',padding:10,display:'flex',flexDirection:'column',alignItems:'center',position:'relative'}}>
-<div style={{width:200,height:200,backgroundColor:'black',overflow:'hidden',borderRadius:20,position:'relative'}} >
-<img src={DataURLType != ""? DataURLType :''} 
-onClick={()=>{
-  inputReff.current.click();
-}}
-style={{width:200,height:200,objectFit:'cover'}} />
-
-
-</div>
-
-</div>
-
-
-
-<h3>Tracks</h3> 
-
-<div style={{display:'flex',width:'100%',flexDirection:'row',position:'relative',paddingBottom:20,justifyContent:'end'}}>
-<Button variant="contained" onClick={()=>{
-   setImage("");
-   setfileName("");
-   setFile("");
-   setContribute("");
-   setAmount('0.00');
-   setFileArray([])
-   setDataURLType("");
-   setDataFileType(null);
-   setStat('');
-   setDataNameType("");
-   setVideoFileLoad(false)
-   setSong([])
-   setType("audio")
-   setSongName([])
-   setFileSampleArray(null)
-   setShowForm(false)
-}}>Clear All Tracks</Button>
-  </div>
-
-</div>
-
-{FileSample != null?<div  style={{display:'flex',width:'100%',flexDirection:'column'}}>
-  <b>Sample Track</b>
-  <audio src={FileSample}  controls={true} />
-</div>:null}
-
-{songName.length > 0 && songName.map((posts,index)=>{
-
-return(<div style={{display:'flex',flexDirection:'column',padding:10,position:'relative',paddingBottom:20,borderBottom:'1px solid lightgrey'}}>
-
-
-
-
-
-{<input id={'replaceFile'+index} accept={'.mp3,.m4a,.wav'}  style={{display:'none'}} type={'file'} multiple={false} onChange={(img)=>{
-
-let pushSongName = [];
-      
-    
-    
-
-
-      let typefile = img.target.files[0].name.substring(img.target.files[0].name.lastIndexOf('.') + 1, img.target.files[0].name.length);
-    
-      let fille = URL.createObjectURL(img.target.files[0]);
-
-   
-
-        
-        pushSongName.push({
-          name: img.target.files[0].name.slice(0,img.target.files[0].name.lastIndexOf('.'+typefile)),
-          musicSrc: fille,
-          type: 'audio',
-          artist: '',
-          tag: '',
-          constributingArtist:'',
-          genre:  '',
-          Cover:'',
-          duration:'',
-        })
-        
-
-      
-
-
-      
-  
-    
-songName[index] = pushSongName[0];
-FileArray[index] = img.target.files[0];
-
-    setSongName([...songName])
-    setFileArray([...FileArray])
-
-
-   
-    
-
-}}   />}
-
-
-
-
-<div style={{display:'flex',width:'100%',flexDirection:'row',position:'relative',paddingBottom:20,justifyContent:'space-between'}}>
- 
-
-<label for={"replaceFile"+index} class="btn">
-Replace file
-</label>
-
-
-<div  onClick={()=>{
-
-DataSong.splice(index,1)
-setSong([...DataSong])
-FileArray.splice(index,1)
-setFileArray([...FileArray])
-songName.splice(index,1)
-setSongName([...songName])
-
-
-}} >
-<i  class="fa fa-times">
-
-</i>
-
-</div>
-  
-</div>
-
-<div style={{display:'flex',alignItems:'center',position:'relative',flexDirection:'column',paddingBottom:20}}>
- 
-
-
-
-<div style={{display:'flex',width:'100%',flexDirection:'row',position:'relative',justifyContent:'space-between'}}>
-<h3>{posts.name}</h3> 
-
-  
-</div>
-
-
-{<audio  style={{borderRadius:100,backgroundColor:'white',width:'100%',marginBottom:20}}
-onLoadedMetadata={(event)=>{
-
-
-posts.duration = readableDuration(event.target.duration)
-setSongName([...songName])
-
-}}
-controls={true} src={posts.musicSrc} />}
-
-{!ios?<div style={{display:'flex',justifyContent:'flex-start',marginBottom:20,marginTop:20,alignItems:'flex-start',width:'100%',position:'relative',flexDirection:'column'}}>
-<b>Sample track</b>
-<p>When you sample this track. This track will be heard before a user buys.</p>
-  <Button variant="contained" style={{width:'auto',marginTop:5}} onClick={async()=>{
-
-
-  if(!ios){
- await FFMPEG.process(
-  FileArray[index],
-  '-metadata location="" -metadata location-eng="" -metadata author="" -t 30 -c:v copy -c:a copy',
-  function (e) {
-    const video = e.result;
-    console.log(video);
-    setFileSampleArray(video[0])
-    setFileSample(URL.createObjectURL(video))
-    setFileVideoSample(null)
-
-  }.bind(this)
-);
-  }
-  
-
-  }} >Sample Track</Button>
-</div>:null}
-
-<div style={{display:'flex',position:'relative',flexDirection:'column',width:'100%'}}>
-
-<b>Song Name</b>
-<input defaultValue={songName[index].name}  style={{border:'1px solid lightgrey',padding:5,width:'100%'}} onChange={(e)=>{
-posts.name = e.target.value;
-//setSongName([...songName])
-
-}} />
- 
- 
- <b>Artist Name</b>
-<input defaultValue={songName[index].artist} placeholder={'Artist Name ft artist'} style={{border:'1px solid lightgrey',padding:5,width:'100%'}}  onChange={(e)=>{
-  posts.artist = e.target.value;
-  //setSongName([...songName])
-}} />
-
-</div>
-
-</div>
-
-<div style={{display:'flex',paddingTop:10,flexDirection:'column'}}>
-  <b>Genre</b>
-  
-<input defaultValue={songName[index].genre} placeholder={'eg(R&B, HipHop, Rap HipHop)'} style={{border:'1px solid lightgrey',padding:5}} onChange={(e)=>{
-posts.genre = e.target.value;
-//setSongName([...songName])
-
-}} />
- 
-
-
-</div>
-
-<div style={{display:'flex',paddingTop:10,position:'relative',flexDirection:'column'}}>
-  <b>Tag</b>
-  <p></p>
-<input placeholder={'@username, @username'} defaultValue={songName[index].tag} style={{border:'1px solid lightgrey',padding:5}} onChange={(e)=>{
-posts.tag = e.target.value;
-//setSongName([...songName])
-}} />
- 
-
-
-</div>
-
-
-<div style={{display:'flex',paddingTop:10,position:'relative',flexDirection:'column'}}>
-  <b>Duration</b>
-  <p>{posts.duration}</p>
-
- 
-
-
-</div>
-<div style={{display:'flex',flexDirection:'column',alignItems:'end',marginTop:10,justifyContent:'end',width:'100%'}}>
-<Button variant="contained" onClick={()=>{
-  setSongName([...songName]);
-  console.log(songName);
-
-}}>Save</Button>
-</div>
-
-</div>)
-
-
-})}
-
-
-
-</div>
-
-}
-handleClose={handleClose} />
-
-
-
-<Card style={{borderWidth:0,justifyContent:'center',alignItems:'center',backgroundColor:Themes['dark'].BackgroundColor}}>
-{ FileArray.length > 0 && fileName.match(/^.*\.(mp4|avi|MOV|mov|mkv|webm)$/)?<div style={{display:'flex',width:'100%',alignItems:'center',alignContent:'center',flexDirection:'column'}}>
-  
-
-  {<button onClick={capture}>Capture</button>}
-  <input ref={inputReff} style={{display:'none'}} type={'file'} onChange={(img)=>{
-  setDataURLType(URL.createObjectURL(inputReff.current.files[0]));
-  setDataFileType(inputReff.current.files[0])
- 
-  setDataNameType(inputReff.current.files[0].name)
- 
-
-  }} ></input>
-
-
-  <p style={{marginBlock:10}}>Thumbnails</p>
-  <div id="canvasPreview" style={{display:'flex',width:'25%',position:'relative',alignItems:'center',alignContent:'center',flexDirection:'row'}}>
-    <p style={{width:'100%',textAlign:'center',justifySelf:'center',position:'absolute',color:'white', backgroundColor:'rgba(0,0,0,0.5)',padding:5,zIndex:20}}>Change Thumbnail</p>
-   
-  {<canvas  id={'canvas'} style={{width:'100%',position:'relative'}} width={60}  onClick={()=>{
-    inputReff.current.click()
-  }} height={30} ref={canvasRef} >
-
-    
-    </canvas>}
-  </div>
-</div>:<></>}
-
-{FileArray.length > 0 && fileName.match(/^.*\.(mp3|wav|WAV|m4a)$/)?<div style={{display:'flex',width:'100%',alignItems:'center',alignContent:'center',flexDirection:'column'}}>
-  
-<img id={'ImageId'} src={DataURLType != "" ? DataURLType : 'https://wallpaperaccess.com/full/2416004.jpg'}  style={{position:'absolute',display:'none',zIndex:20,top:5,left:5}} width={'100%'} height={'100%'} />
-
-  <input ref={inputReff} accept={"image/*"} style={{display:'none'}} type={'file'} onChange={(img)=>{
-  setDataURLType(URL.createObjectURL(inputReff.current.files[0]));
-  setDataFileType(inputReff.current.files[0])
-  setDataNameType(inputReff.current.files[0].name)
-
-  
-  }} ></input>
-<p onClick={()=>{
-inputReff.current.click();
-}} style={{color:'white',backgroundColor:'#007bff',padding:10,borderRadius:5,cursor:'pointer'}}>
-Cover Art
-</p>
-
-</div>:null}
-  <p>Preview</p>
-  {statStatus != "" ?<p>{statStatus}</p>:null}
-  
-{UrlForMedia(descript.replace(/\n/g, " "),fileName,setURLARRAY)}
-
-{PostImageFeed(fileName,image,DataURLType,capture,FileArray,setFileArray,handleClear,pressFull,descript,setindex,index,setSongName,CarourselReff)}
-
-
-
-
-
-
-</Card>
-
-
-
         </div>
     
     </Container>
-    </div>
+ 
     
     </div>
     )
