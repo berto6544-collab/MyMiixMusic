@@ -3,7 +3,7 @@ import {LinkType} from '../json/LinkTypes';
 
 
 
-const ChooseType = ({setTypeFunction,setDescription,setTitle}) =>{
+const ChooseType = ({setTypeFunction,setDescription,setTitle,handleClear}) =>{
 
 
 
@@ -21,10 +21,12 @@ return(
       {LinkType.map((post,i)=>{
         if(i == 0){
         return(<div key={post.Type} onClick={()=>{
-            
+            handleClear()
             setTypeFunction(post.Type)
+            
             setDescription('')
             setTitle('')
+            
          
         }} style={{position:'relative',padding:10,marginTop:10,cursor:'pointer',color:'black',borderRadius:10,backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'center'}}>
                 <img src={post.Image} style={{width:40,height:40}} />
@@ -32,10 +34,11 @@ return(
               </div>)
         }else{
           return(<div key={post.Type} onClick={()=>{
-            
+            handleClear()
             setTypeFunction(post.Type)
             setDescription('')
             setTitle('')
+            
             
           }} style={{position:'relative',marginLeft:10,marginTop:10,padding:10,color:'black',borderRadius:10,cursor:'pointer',backgroundColor:'white',display:'flex',flexDirection:'column',alignItems:'center'}}>
           <img src={post.Image} style={{width:40,height:40}} />

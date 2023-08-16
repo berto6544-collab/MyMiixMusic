@@ -3,9 +3,11 @@ import '../css/Login.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Cookies from 'js-cookie';
-import {FormControl,InputLabel,CircularProgress,OutlinedInput,TextField,IconButton,InputAdornment,Icon,FilledInput,Dialog,FormControlLabel,FormLabel,RadioGroup,Radio,Select,MenuItem,Checkbox} from '@mui/material/';
-import {Container,Card,Badge} from 'react-bootstrap';
+import {FormControl,IconButton} from '@mui/material/';
+import {Button, Container} from 'react-bootstrap';
 import {Videocam,Filter,Event,LibraryMusic,Close} from '@mui/icons-material';
+import SmallDialog from '../dialog-components/DialogSmalll';
+
 
 import Player from 'react-player';
 import {Tooltip} from '@mui/material';
@@ -30,6 +32,7 @@ import * as Themes from '../Utility/Theme';
 import Progress from './ProgressBar';
 import ChooseType from './ChooseType';
 import FileUploaded from './UploadFile';
+import MusicPost from './MusicPost';
 
 
 
@@ -247,22 +250,24 @@ if(!ios){
 
 const handleClear = () =>{
 
-  if(FileArray.length > 0){
-
-  }
-  else{
+  
   setImage("");
   setfileName("");
   setFile("");
   setContribute("");
   setAmount('0.00');
+  setFileArray([])
   setDataURLType("");
   setDataFileType(null);
-  setSong([])
+  setStat('');
   setDataNameType("");
-  setFileArray([])
-  setVideoFileLoad(false) 
-  }
+  setVideoFileLoad(false)
+  setSong([])
+  setType("audio")
+  setSongName([])
+  setFileSampleArray(null)
+  setShowForm(false)
+  
 }
 
 
@@ -437,7 +442,7 @@ const handleClose = () =>{
 
       <Progress percentagge={percentagge} isLoading={isLoading} />
 
-    <Container style={{marginTop:'60px',width:'100%',position:'relative'}}  className="Container"> 
+    <Container style={{marginTop:'60px',width:'100%',position:'relative',paddingBottom:'10rem'}}  className="Container"> 
     <MetaTags>
             <title>{isLoading? 'MyMiix - Progress '+percentagge+'%' : 'MyMiix - Uploade Your Music'}</title>
            
@@ -449,14 +454,62 @@ const handleClose = () =>{
 
         <FormControl style={{width:'100%',marginTop:'20px',backgroundColor:Themes['dark'].BackgroundColorTheme}} variant="standard" >
         
-        <ChooseType setDescription={setDescription} setTitle={setTitle} setTypeFunction={setTypeFunction} />
+        <ChooseType setDescription={setDescription} setTitle={setTitle} handleClear={handleClear} setTypeFunction={setTypeFunction} />
 
         {typeFunction != "" && typeFunction == "Upload"?<div style={{width:'100%',padding:10,position:'relative'}}>
         <b>Write Album Title*</b>
           
           <input value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
         <input type={'file'} onChange={handleOnChange} multiple accept='.mp3,.wav,.m4a'  ref={inputRef} style={{display:'none'}} />
-        <FileUploaded inputRef={inputRef} />
+        <input type={'file'} onChange={(img)=>{
+            setDataURLType(URL.createObjectURL(inputReff.current.files[0]));
+            setDataFileType(inputReff.current.files[0])
+           
+            setDataNameType(inputReff.current.files[0].name)
+           
+        }}  accept='.jpeg,.jpg,.png,.gif'  ref={inputReff} style={{display:'none'}} />
+       
+        {FileArray.length == 0?<FileUploaded inputRef={inputRef} />:null}
+        <div style={{display:'flex',width:'100%',alignItems:'center',padding:10,justifyContent:'space-between'}}>
+        <div style={{display:'flex:',alignItems:'center'}}>
+          {FileArray.length > 0?<IconButton onClick={()=>{
+          setShowForm(!showForm);
+            
+          }}><LibraryMusic style={{color:'white'}} /></IconButton>:null}
+        </div>
+
+
+        <div style={{display:'flex:',alignItems:'center'}}>
+          <IconButton onClick={()=>{
+            setShowDate(true)
+          }}><Event style={{color:'white'}} /></IconButton>
+          <Button onClick={()=>handleOnClick()}>Post</Button>
+        </div>
+
+        </div>
+
+
+        {FileArray.length > 0?<MusicPost DataURLType={DataURLType} 
+        inputReff={inputReff}
+        showForm={showForm} 
+        handleClear={handleClear} 
+        FileSample={FileSample} 
+        songName={songName} 
+        FileArray={FileArray} 
+        setFileArray={setFileArray} 
+        setSongName={setSongName}
+        DataSong={DataSong}
+        FFMPEG={FFMPEG}
+        setSong={setSong}
+        readableDuration={readableDuration}
+        setFileSampleArray={setFileSampleArray}
+        setFileVideoSample={setFileVideoSample}
+        setFileSample={setFileSample}
+
+        ios={ios} />:null
+        
+        }
+
 
         </div>:
         typeFunction != "" && typeFunction != "Upload"?
@@ -469,12 +522,34 @@ const handleClose = () =>{
           <input value={descript} onChange={(e)=>setDescription(e.target.value)} style={{width:'100%',padding:10}} />
 
           <div style={{width:'100%',display:'flex',alignItems:'center',flexDirection:'column'}}>
+          <div style={{display:'flex',width:'100%',alignItems:'center',padding:10,justifyContent:'space-between'}}>
+        <div style={{display:'flex:',alignItems:'center'}}>
+          
+        </div>
+
+
+        <div style={{display:'flex:',alignItems:'center'}}>
+          <IconButton onClick={()=>{
+            setShowDate(true)
+          }}><Event style={{color:'white'}} /></IconButton>
+          <Button onClick={()=>handleOnClick()}>Post</Button>
+        </div>
+
+        </div>
+
+
           <b>Preview</b>
 
-          {UrlForMedia(descript,fileName,setURLARRAY)}
+          {UrlForMedia(descript,fileName,setURLARRAY,typeFunction)}
 
           </div>
           
+
+  
+
+
+
+
           </div>:null
         
         
@@ -483,10 +558,40 @@ const handleClose = () =>{
         
       
         </FormControl>
+
+
+
+
       
         </div>
     
     </Container>
+ 
+
+    <SmallDialog  setshow={setShowDate}  isOpen={showDate}  Title={'Schedule Date'} 
+Data={<div style={{width:'100%',display:'flex',flexDirection:'column'}}>
+<input value={statDate} style={{border:'1px solid rgb(240, 244, 248)',padding:10,borderRadius:5,backgroundColor:'rgb(240, 244, 248)'}}  name={'postimgggg'} min={MinDate} onChange={(e)=>{
+setDate(e.target.value);
+
+
+console.log(e.target.value)
+}} type={'datetime-local'}     />
+<div style={{display:'flex',width:'100%',alignItems:'center',flexDirection:'row',justifyContent:'space-evenly'}}>
+
+<Button  onClick={()=>{
+setShowDate(false)
+
+}} >OK</Button>
+<Button onClick={()=>{
+setShowDate(false)
+
+}} >Cancel</Button>
+
+</div>
+
+
+
+  </div>} />
  
     
     </div>
@@ -494,7 +599,7 @@ const handleClose = () =>{
 
 
 
-    function UrlForMedia(dataBody,postimage,Data) {
+    function UrlForMedia(dataBody,postimage,Data,typeFunction) {
 
      
       if(dataBody != undefined){
@@ -513,7 +618,7 @@ const handleClose = () =>{
        
     
     if(postimage == ""){
-    if (word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?youtube\.com\/([a-zA-Z0-9_]+)/)){
+    if (word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?(music\.)?youtube\.com\/([a-zA-Z0-9_]+)/) && typeFunction == "Youtube"){
       //console.log(word);
       return(<div>
         <PreviewPost setDatta={Data} url={word} />
@@ -522,12 +627,8 @@ const handleClose = () =>{
       </div>)
     }
     
-    else if(word.match(/http(?:s)?:\/\/mymiix\.com\/embed\/([a-zA-Z0-9_]+)/)) {
-      
-      <iframe width={'100%'} height={450} frameBorder={"0"} style={{width:'100%',height:450,borderRadius:10}}  src={word} ></iframe>
-
-    }
-    else if(word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?soundcloud\.com\/([a-zA-Z0-9_]+)/)) {
+  
+    else if(word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?soundcloud\.com\/([a-zA-Z0-9_]+)/) && typeFunction == "Soundcloud") {
     
       return(<div>
         <PreviewPost setDatta={Data} url={word} />
@@ -536,16 +637,9 @@ const handleClose = () =>{
       </div>)
     }
     
-    else if(word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?twitch\.tv\/([a-zA-Z0-9_]+)/)) {
-    
-      return(<div>
-        <PreviewPost setDatta={Data} url={word} />
-        <Player controls={true} autoPlay={true} playing={true} light={true} style={{width:'100%', height:360}} width={'100%'} height={'360px'}  className={'react-player'} url={word} ></Player>
-      
-      </div>)
-    }
+   
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?track\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?track\/([a-zA-Z0-9_]+)/)  && typeFunction == "Spotify") {
 
             
       if(postimage == ""){
@@ -564,16 +658,9 @@ const handleClose = () =>{
     
     }
     
-    if(word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?discord\.com\/widget/)) {
-      return (<div>
-        <PreviewPost setDatta={Data} url={word} />
-        <iframe style={{width:'100%',height:360}} allowTransparency={true} sandbox={"allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"}  src={word} ></iframe>
-      
-      </div>)
-      
-    }
+   
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?track\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?track\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
 
             
       if(postimage == ""){
@@ -587,7 +674,7 @@ const handleClose = () =>{
     
     }
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?album\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?album\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
     
       
       if(postimage == ""){
@@ -601,7 +688,7 @@ const handleClose = () =>{
     
     }
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?album\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?album\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
 
             
       if(postimage == ""){
@@ -615,7 +702,7 @@ const handleClose = () =>{
     
     }
     
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?playlist\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?playlist\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
     
       
       if(postimage == ""){
@@ -630,7 +717,7 @@ const handleClose = () =>{
     }
 
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?playlist\/([a-zA-Z0-9_]+)/)) {
+    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?playlist\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
 
             
       if(postimage == ""){
@@ -660,45 +747,14 @@ const handleClose = () =>{
     
 
 
-       /* var value = dataBody.match(/http(?:s)?:\/\/(?:www\.)?([a-zA-Z0-9_]+)\.?([a-zA-Z0-9_]+)/);
-        if(value.length > 0){
-          if(value[0]){
-            const APIURL = "https://mymiix.com:49856/URICheck";
-            fetch(`${APIURL}?URL=${word}`, {
-              method: "GET",
-              
-            }).then(res=>res.json())
-            .then(responseJSON=>{
-              setData(responseJSON)
-
-            })
-
-            
-          }
-
-        
-    }*/
+      
 
     
-    return(<div style={{width:'100%',justifyContent:'center'}}>
-      {/*<ReactTinyLink
-            cardSize="large"
-            showGraphic={false}
-            width="100vw"
-            maxLine={1}
-            minLine={1}
-            url={word}
-      />*/}
-    
-<Preview setDatta={Data} url={word} />
-
-          
-          
-          </div>)
+    return(null)
     
     }else{
      
-     return(<a href={word}>{separator + word}</a>)
+     return(null)
     }
     
     }
@@ -734,7 +790,7 @@ const handleClose = () =>{
     }
     
     else{
-      return(<a style={{paddingLeft:5,marginBottom:0}} href={word} >{word}</a>)
+      return(null)
      }
     
       }
@@ -744,11 +800,11 @@ const handleClose = () =>{
     
     }
     else  if (word.match(/@(\w+)/g)) {
-      return(<a href={'https://mymiix.com/'+word}>{separator}{word}</a>);
+      return(null);
     }
     else{
     
-    return(word+separator)
+    return(null)
     }
     
     }
@@ -762,7 +818,7 @@ const handleClose = () =>{
     
       if (word.match(/#(\w+)/g)) {
     
-    return(<Badge href={word} style={{padding:10, marginBottom:5}} pill variant="light"><a href={word}>{word}</a></Badge>);
+    return(null);
       }
       else if (word.match(/@(\w+)/g)){
         
