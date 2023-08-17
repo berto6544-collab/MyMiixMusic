@@ -23,6 +23,7 @@ const [hasMore,setHasMore] = React.useState(false)
 
 const hadleModify = (items) =>{
 
+  if(items.postimg != ""){
   const arraySong = [];
   const Song = items.postimg.split(",");
   Song.forEach((post, ind) => {
@@ -40,9 +41,34 @@ const hadleModify = (items) =>{
     
 
   })
- 
-  return arraySong;
   
+  
+
+ return arraySong;
+  }else{
+    const arraySong = [];
+    
+    
+    
+      
+      arraySong.push({
+        musicSrc:items.URLData[0].url,
+        cover:items.URLData[0].img,
+        name:items.URLData[0].title,
+        singer:""    
+  
+      })
+  
+    
+      
+  
+   
+    
+ 
+  
+   return arraySong;
+    
+  }
 }
 
 

@@ -12,6 +12,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import "../../music-css/Footer.css";
 import { Grid, Slider } from "@mui/material";
 import AuthApi from "../../components/AuthApi";
+import ReactPlayer from 'react-player';
 
 function Footer({ spotify,itemSource,playing,setPlaying}) {
 
@@ -136,13 +137,15 @@ const skipPrevious = () =>{
 
 
 const handlePlay = () => {
-  audioRef.current.play();
+  
   setPlayingg(true);
+  //audioRef.current.play();
 };
 
 const handlePause = () => {
-  audioRef.current.pause();
+ 
   setPlayingg(false);
+  //audioRef.current.pause();
 };
 
 const handlePlayPause = () => {
@@ -154,8 +157,13 @@ const handlePlayPause = () => {
 };
 
 const handleTimeUpdate = () => {
-  setCurrentTime(audioRef.current.currentTime);
-  setDuration(audioRef.current.duration);
+  setCurrentTime(audioRef.current.getCurrentTime());
+  setDuration(audioRef.current.getDuration());
+};
+
+const handleSeekUpdate = () => {
+  setCurrentTime(audioRef.current.getCurrentTime());
+  setDuration(audioRef.current.getDuration());
 };
 
 const handleOnVolumeChange = () =>{
@@ -182,7 +190,7 @@ const handleExpand = () =>{
 }
 
 const handleSeek = (e) => {
-  audioRef.current.currentTime = e.target.value;
+  audioRef.current.seekTo(e.target.value,'seconds');
   setCurrentTime(e.target.value);
 };
 
@@ -381,7 +389,7 @@ function formatDuration(durationSeconds) {
 
 
 </div>
-<audio style={{display:'none'}}
+<ReactPlayer style={{display:'none'}}
       onCanPlay={(e)=>{
         //Auth.setPlaying
         setPlayingg(playing)
@@ -397,15 +405,17 @@ function formatDuration(durationSeconds) {
 
       }} 
       
-      
-      onTimeUpdate={handleTimeUpdate}
+      onPlay={handleTimeUpdate}
+      onSeek={handleTimeUpdate}
+      onProgress={handleTimeUpdate}
       onVolumeChange={handleOnVolumeChange}
       volume={sound}
-      loop={loop} playing={playingg} playsInline={true} src={itemSource[Auth.songIndex]?.musicSrc} >
-        {itemSource.map((post,i)=>{return(<source key={i} src={post?.musicSrc}  />)})}
+      
+      loop={loop} progressInterval={currentTime} playing={playingg} playsInline={true} url={itemSource[Auth.songIndex]?.musicSrc} >
+        
        
 
-      </audio>
+      </ReactPlayer>
 
     </div>
   );

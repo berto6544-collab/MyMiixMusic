@@ -6,9 +6,12 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 function SongRow({item,dataSource,setItemSource,index,setIndex}) {
   const Auth = React.useContext(AuthApi)
 
-  const hadleModify = (items) =>{
+  
 
+  const hadleModify = (items) =>{
     const arraySong = [];
+    if(items.postimg != ""){
+    
     const Song = items.postimg.split(",");
     Song.forEach((post, ind) => {
     
@@ -25,12 +28,40 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
       
   
     })
-   
-    reactLocalStorage.setObject("SongData",arraySong)
-
-   return arraySong;
     
+   
+  
+    }else{
+      
+      
+      
+      
+        
+        arraySong.push({
+          musicSrc:items.URLData[0].url,
+          cover:items.URLData[0].img,
+          name:items.URLData[0].title,
+          singer:""    
+    
+        })
+    
+      
+        
+    
+     
+      
+    
+    
+     
+       
+    }
+
+   reactLocalStorage.setObject("SongData",arraySong)
+   return [...arraySong];
   }
+
+
+
   return (
     <div className="songRow" key={index} onClick={() =>{
      //Auth.setItems(item)

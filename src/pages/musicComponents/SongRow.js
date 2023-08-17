@@ -8,6 +8,7 @@ function SongRow({item,dataSource,index,setIndex}) {
 
   const hadleModify = (items) =>{
 
+    if(items.type == ""){
     const arraySong = [];
     const Song = items.postimg.split(",");
     Song.forEach((post, ind) => {
@@ -25,11 +26,34 @@ function SongRow({item,dataSource,index,setIndex}) {
       
   
     })
-    console.log(arraySong)
-    reactLocalStorage.setObject("SongData",arraySong)
-
-   return arraySong;
     
+    reactLocalStorage.setObject("SongData",arraySong)
+  
+   return arraySong;
+    }else{
+      const arraySong = [];
+      
+      
+      
+        
+        arraySong.push({
+          musicSrc:items.URLData[0].url,
+          cover:items.URLData[0].img,
+          name:items.URLData[0].title,
+          singer:""    
+    
+        })
+    
+      
+        
+    
+     
+      
+      reactLocalStorage.setObject("SongData",arraySong)
+    
+     return arraySong;
+      
+    }
   }
   
   return (
@@ -48,10 +72,10 @@ function SongRow({item,dataSource,index,setIndex}) {
      Auth.setPlaying(true)
  
      }}>
-      <img className="songRow__album" src={dataSource.art} alt="" />
+      <img className="songRow__album" src={dataSource.art || item?.img} alt="" />
       <div className="songRow__info">
-        <h1>{item.name}</h1>
-        <p>{item.artist}</p>
+        <h1>{item?.name || item.title }</h1>
+        <p>{item?.artist || ""}</p>
       </div>
      
     </div>

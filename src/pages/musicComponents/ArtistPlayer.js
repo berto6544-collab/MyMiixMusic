@@ -48,17 +48,19 @@ setStart(start +1)
 },[])
 
 
-const hadleModify = (item) =>{
-
+const hadleModify = (items) =>{
   const arraySong = [];
-  const Song = item.postimg.split(",");
-  item.SongData.map((post,ind)=>{
+  if(items.postimg != ""){
+  
+  const Song = items.postimg.split(",");
+  Song.forEach((post, ind) => {
+  
     
     arraySong.push({
-      musicSrc:Song[ind],
-      cover:item.art,
-      name:post.name,
-      singer:post.artist    
+      musicSrc:post,
+      cover:items.art,
+      name:items.SongData[ind].name,
+      singer:items.SongData[ind].artist    
 
     })
 
@@ -66,9 +68,34 @@ const hadleModify = (item) =>{
     
 
   })
-  console.log(arraySong)
-  return [...arraySong];
   
+ 
+
+ return [...arraySong];
+  }else{
+    
+    
+    
+    
+      
+      arraySong.push({
+        musicSrc:items.URLData[0].url,
+        cover:items.URLData[0].img,
+        name:items.URLData[0].title,
+        singer:""    
+  
+      })
+  
+    
+      
+  
+   
+    
+  
+  
+   
+      return [...arraySong]; 
+  }
 }
 
 

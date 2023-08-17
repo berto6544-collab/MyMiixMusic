@@ -21,6 +21,7 @@ const [index,setIndex] =  React.useState(0);
 
 const hadleModify = (items) =>{
 
+  if(items.postimg == ""){
   const arraySong = [];
   const Song = items.postimg.split(",");
   Song.forEach((post, ind) => {
@@ -42,7 +43,30 @@ const hadleModify = (items) =>{
   reactLocalStorage.setObject("SongData",arraySong)
 
  return arraySong;
+  }else{
+    const arraySong = [];
+    
+    
+    
+      
+      arraySong.push({
+        musicSrc:items.URLData[0].url,
+        cover:items.URLData[0].img,
+        name:items.URLData[0].title,
+        singer:""    
   
+      })
+  
+    
+      
+  
+   
+    
+    reactLocalStorage.setObject("SongData",arraySong)
+  
+   return arraySong;
+    
+  }
 }
 
 if(dataSource == null) return null;
@@ -51,7 +75,7 @@ if(dataSource == null) return null;
 
 
       
-<BodyInfo art={dataSource.art} info={'PLAYLIST'}  name={dataSource.SongData[Auth.songIndex].name} title={''} />
+<BodyInfo art={dataSource.art != ""?dataSource.art : dataSource.URLData[Auth.songIndex].img } info={'PLAYLIST'}  name={dataSource.postimg != "" ?dataSource.SongData[Auth.songIndex].name:dataSource.URLData[Auth.songIndex].title} title={''} />
 
       <div className="body__songs_artists">
         <div className="body__icons">
@@ -81,6 +105,11 @@ if(dataSource == null) return null;
 
       })}
 
+{dataSource.URLData.map((item,i)=>{
+
+return(<SongRow item={item} index={i} setIndex={setIndex} dataSource={dataSource} />)        
+
+})}
 
       </div>
     </div>

@@ -100,6 +100,7 @@ function PostFeed(props) {
     const [userAuthAccount,setAuth] = React.useState('');
     const inputRef = React.useRef()
     const inputReff = React.useRef()
+    const iframeReff = React.useRef()
     const CarourselReff = React.useRef()
     const canvasRef = React.useRef(null);
 
@@ -540,7 +541,7 @@ const handleClose = () =>{
 
           <b>Preview</b>
 
-          {UrlForMedia(descript,fileName,setURLARRAY,typeFunction)}
+          {UrlForMedia(descript,fileName,setURLARRAY,typeFunction,iframeReff)}
 
           </div>
           
@@ -599,7 +600,7 @@ setShowDate(false)
 
 
 
-    function UrlForMedia(dataBody,postimage,Data,typeFunction) {
+    function UrlForMedia(dataBody,postimage,Data,typeFunction,iframeReff) {
 
      
       if(dataBody != undefined){
@@ -649,8 +650,12 @@ setShowDate(false)
       <div>
         <PreviewPost setDatta={Data} url={word} />
         <iframe 
-      style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/track/'+U+''} ></iframe>
+      style={{width:'100%',height:250,borderRadius:10}} 
+      ref={iframeReff}
       
+      src={'https://open.spotify.com/embed/track/'+U+''} ></iframe>
+      
+      <Button onClick={()=>iframeReff.current.postMessage({command: 'play'}, '*')} >Play</Button>
       </div>
       
       )
@@ -660,19 +665,7 @@ setShowDate(false)
     
    
 
-    if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?track\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
-
-            
-      if(postimage == ""){
-    
-        var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?track\//,'');
-      return (<div>
-        <PreviewPost setDatta={Data} url={word} />
-        <iframe 
-      style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/track/'+U+''} ></iframe></div>)
-      }
-    
-    }
+   
 
     if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?album\/([a-zA-Z0-9_]+)/) && typeFunction == "Spotify") {
     
@@ -683,6 +676,7 @@ setShowDate(false)
       return (<div>
         <PreviewPost setDatta={Data} url={word} />
         <iframe 
+        
       style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/album/'+U+''} ></iframe></div>)
       }
     

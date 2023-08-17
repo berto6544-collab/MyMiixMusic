@@ -15,28 +15,54 @@ const [index,setIndex] =  React.useState(0);
 
 
 
-const hadleModify = (item) =>{
+const hadleModify = (items) =>{
 
+  if(items.postimg == ""){
   const arraySong = [];
-  const Song = item.postimg.split(",");
-  item.SongData.map((post,ind)=>{
+  const Song = items.postimg.split(",");
+  Song.forEach((post, ind) => {
+  
     
     arraySong.push({
-      
-      musicSrc:Song[ind],
-      cover:item.art,
-      name:post.name,
-      singer:post.artist    
+      musicSrc:post,
+      cover:items.art,
+      name:items.SongData[ind].name,
+      singer:items.SongData[ind].artist    
 
-    });
+    })
 
   
     
 
-  });
+  })
   
-  return arraySong;
+ 
+
+ return arraySong;
+  }else{
+    const arraySong = [];
+    
+    
+    
+      
+      arraySong.push({
+        musicSrc:items.URLData[0].url,
+        cover:items.URLData[0].img,
+        name:items.URLData[0].title,
+        singer:""    
   
+      })
+  
+    
+      
+  
+   
+    
+  
+  
+   return arraySong;
+    
+  }
 }
 
 if(userData == null) return null;
