@@ -73,6 +73,10 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
     Auth.setIndex(index)
     Auth.setSongIndex(0)
 
+    
+      Auth.setType("normal")
+      reactLocalStorage.set("type","normal")
+     
 
     }}>
       <div className={'songRow__album'} style={{position:'relative',fontSize:40}}>

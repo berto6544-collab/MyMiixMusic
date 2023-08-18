@@ -14,18 +14,19 @@ const [ItemSource,setItemSource] = React.useState(null);
 const [ItemSourceSong,setItemSongSource] = React.useState([]);
 const [index,setIndex] = React.useState(0);
 const [start,setStart] = React.useState(0);
+const [search,setSearch] = React.useState("");
 const [hasMore,setHasMore] = React.useState(false)
 
 React.useEffect(()=>{
 
-API.API.MusicData(start)
+API.API.MusicData(start,search)
 .then(response=>{
   console.log(response)
 
   setDataSource(response)
   setItemSource(response.TopHits[index])
 
-  //setItemSongSource(response.TopHits[index])
+  
 
 
 })
@@ -37,11 +38,30 @@ API.API.MusicData(start)
 
 
 
+const Search = () =>{
+
+  setDataSource(null)
+  setItemSource(null)
+  API.API.MusicData(start,search)
+.then(response=>{
+  console.log(response)
+
+  setDataSource(response)
+  setItemSource(response.TopHits[index])
+
+  //setItemSongSource(response.TopHits[index])
+
+
+})
+
+}
+
+
   return (
     <div className="player">
       <div className="player__body">
         <Sidebar />
-        <Body spotify={spotify} dataSource={dataSource} />
+        <Body setSearch={setSearch} searcch={search} Search={Search} spotify={spotify} dataSource={dataSource} />
       </div>
       <Footer spotify={spotify} itemSource={ItemSourceSong} index={index} />
     </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { BrowserRouter as Router, Link,useParams } from 'react-router-dom';
 import Utils from '../../Utility/Utils';
 import 'lazysizes';
 import * as Themes from '../../Utility/Theme';
@@ -17,9 +18,7 @@ const contents = dataSource.map((posts,i) => {
 
 
     return(
-      <div onClick={()=>{
-        window.location.href = '/song/'+posts.uniqId
-      }} className="songRow" >
+      <Link to={'/song/'+posts.uniqId} className="songRow" >
         
         <i class="fa fa-play-circle play" style={{position:'absolute'}}></i> 
 
@@ -32,7 +31,7 @@ const contents = dataSource.map((posts,i) => {
         <h1>{posts?.title}</h1>
         
       </div>
-    </div>
+    </Link>
           )
 
     

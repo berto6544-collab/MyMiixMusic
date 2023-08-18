@@ -21,13 +21,21 @@ function SongRow({item,dataSource,index,setIndex}) {
         singer:items.SongData[ind].artist    
   
       })
+
+
+
   
     
       
   
     })
+
     
+   
+
     reactLocalStorage.setObject("SongData",arraySong)
+
+    
   
    return arraySong;
     }else{
@@ -46,10 +54,12 @@ function SongRow({item,dataSource,index,setIndex}) {
     
       
         
-    
+        
      
       
       reactLocalStorage.setObject("SongData",arraySong)
+
+      
     
      return arraySong;
       
@@ -70,6 +80,17 @@ function SongRow({item,dataSource,index,setIndex}) {
      Auth.setIndex(index)
      Auth.setSongIndex(index)
      Auth.setPlaying(true)
+
+    if(dataSource.types == "Spotify" || dataSource.types == "spotify" ){
+
+      Auth.setType("Spotify")
+      reactLocalStorage.set("type","Spotify")
+     }else{
+      Auth.setType("normal")
+      reactLocalStorage.set("type","normal")
+     }
+
+  
  
      }}>
       <img className="songRow__album" src={dataSource.art || item?.img} alt="" />

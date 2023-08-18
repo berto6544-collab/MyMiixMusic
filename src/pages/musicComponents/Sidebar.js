@@ -11,8 +11,11 @@ function Sidebar() {
   return (
     <div className="sidebar">
       
-      <SidebarOption href={'/'} Icon={HomeIcon} option="Home" />
-      <SidebarOption href={'/libary'} Icon={LibraryMusicIcon} option="Your Library" />
+      <SidebarOption href={'/'} Icon={'b'} option="Home" />
+      <SidebarOption href={'/libary'} Icon={'b'} option="Your Library" />
+      <SidebarOption href={'/explore/Spotify'} Icon={'b'} option="Spotify" />
+      <SidebarOption href={'/explore/Soundcloud'} Icon={'b'} option="SoundCloud" />
+      <SidebarOption href={'/explore/Youtube'} Icon={'b'} option="Youtube" />
       <br />
      
     </div>

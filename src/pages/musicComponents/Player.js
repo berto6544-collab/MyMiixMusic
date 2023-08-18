@@ -77,7 +77,7 @@ React.useEffect(()=>{
 API.API.MusicDataUniq(uniqId)
 .then(response=>{
 
-
+console.log(response)
 setDataSource(response[index])
 setItemSource(hadleModify(response[index]))
 Auth.setItem(hadleModify(response[index]))

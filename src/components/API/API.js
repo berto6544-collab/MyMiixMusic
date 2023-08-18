@@ -1,6 +1,6 @@
-async function MusicData(start){
+async function MusicData(start,q){
 
-    const data = await fetch('https://music.mymiix.com/api/MusicData?start='+start)
+    const data = await fetch('https://music.mymiix.com/api/MusicData?start='+start+'&q='+q)
     .then(response =>response.json())
     .catch(res=>res)
 
@@ -16,9 +16,9 @@ const MusicDataUniq = async(uniqId) =>{
     return data;
 }
 
-const MusicDataExplore = async(q,start) =>{
+const MusicDataExplore = async(q,start,search) =>{
 
-    const data = await fetch('https://music.mymiix.com/api/MusicDataExplore?search='+q+'&start='+start)
+    const data = await fetch('https://music.mymiix.com/api/MusicDataExplore?search='+q+'&start='+start+'&q='+search)
     .then(res=>res.json())
 
     return data;
@@ -41,9 +41,9 @@ const MusicDataUser  = async(user,start) =>{
 return data;
 }
 
-const MusicDataUserScroll = async(user,start) =>{
+const MusicDataUserScroll = async(user,start,search) =>{
 
-    const data = fetch('https://music.mymiix.com/api/MusicDataUserScroll?user='+user+'&start='+start)
+    const data = fetch('https://music.mymiix.com/api/MusicDataUserScroll?user='+user+'&start='+start+'&q='+search)
     .then(res=>res.json())
 
     return data

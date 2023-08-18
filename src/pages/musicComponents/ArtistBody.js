@@ -9,7 +9,7 @@ import AuthApi from "../../components/AuthApi";
 import BodyInfo from "./BodyInfo";
 
 
-function Body({dataSource,setItemSource,ScrollData,userData}) {
+function Body({dataSource,setItemSource,searcch,setSearch,Search,ScrollData,userData}) {
 const Auth = React.useContext(AuthApi)
 const [index,setIndex] =  React.useState(0);
 
@@ -72,7 +72,7 @@ if(userData == null) return null;
 
       
 
-      <BodyInfo art={userData.profileimg} info={'Artist'}  name={userData.username} title={''} />
+      <BodyInfo art={userData.profileimg} searcch={searcch} setSearch={setSearch} Search={Search}  info={'Artist'}  name={userData.username} title={''} />
 
       <div className="body__songs_artists">
         <div className="body__icons">

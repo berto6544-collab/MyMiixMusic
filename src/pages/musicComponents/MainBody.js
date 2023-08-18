@@ -8,7 +8,7 @@ import AlbumsViewer from "../../components/ViewerComp/AlbumViewer";
 import ContainerViewer from "../../components/ViewerComp/ContainerViewer";
 
 
-function Body({ spotify,dataSource }) {
+function Body({ spotify,dataSource,Search,searcch,setSearch }) {
 const [containerData,setDataSourceContainer] = React.useState(
 [
 {
@@ -48,7 +48,7 @@ const [containerData,setDataSourceContainer] = React.useState(
 
   return (
     <div className="body">
-      <Header spotify={spotify} />
+      <Header setSearch={setSearch} searcch={searcch} Search={Search} spotify={spotify} />
 
 
       <div className="body__songs">

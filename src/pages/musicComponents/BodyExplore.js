@@ -13,7 +13,7 @@ import '../../music-css/SongColumn.css'
 
 
 
-function Body({dataSource,q,scroll}) {
+function Body({dataSource,q,scroll,searcch,setSearch,Search}) {
 const Auth = React.useContext(AuthApi);
 
 
@@ -55,10 +55,15 @@ if(dataSource.length === 0) return null;
 
       
 <BodyInfo art={q == "TopHits"? "https://cdn-profiles.tunein.com/s221182/images/logod.png?t=637726155150000000"
-:'https://digitalsynopsis.com/wp-content/uploads/2017/07/beautiful-color-ui-gradients-backgrounds-frost.png'
+:dataSource[0].art || dataSource[0].SongData[0]?.img
 } 
-
+searcch={searcch} 
+setSearch={setSearch} 
+Search={Search}
 info={''}  name={q} title={''} />
+
+
+
 
       <div className="body__songs_artists">
         

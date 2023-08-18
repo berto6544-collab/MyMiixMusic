@@ -18,6 +18,7 @@ const [dataSource,setDataSource] = React.useState([]);
 const [ItemSource,setItemSource] = React.useState([]);
 const [index,setIndex] = React.useState(0);
 const [start,setStart] = React.useState(0);
+const [search,setSearch] = React.useState("")
 const [hasMore,setHasMore] = React.useState(false)
 
 
@@ -48,7 +49,7 @@ const hadleModify = (items) =>{
 
 React.useEffect(()=>{
 
-API.API.MusicDataExplore(q,start)
+API.API.MusicDataExplore(q,start,search)
 .then(response=>{
 
 
@@ -69,7 +70,7 @@ Auth.setIndex(index)
 
 const Scroll = () =>{
 
-  API.API.MusicDataExplore(q,start)
+  API.API.MusicDataExplore(q,start,search)
 .then(response=>{
 
 
@@ -82,12 +83,30 @@ setStart(start+1)
 
 }
 
+
+const SearchData = () =>{
+  setStart(0)
+  API.API.MusicDataExplore(q,0,search)
+.then(response=>{
+
+
+  if(response.length > 0 ){
+setDataSource(response)
+setItemSource(hadleModify(response[index]))
+Auth.setItem(hadleModify(response[index]))
+setStart(start+1)
+Auth.setIndex(index)
+
+  }
+})
+}
+
   return (
     <div className="player">
       
       <div className="player__body">
         {/*<Sidebar />*/}
-        {dataSource != null ?<Body dataSource={dataSource} scroll={Scroll} q={q} />:<BodyContainer dataSource={dataSource} />}
+        {dataSource != null ?<Body dataSource={dataSource} searcch={search} setSearch={setSearch} Search={SearchData} scroll={Scroll} q={q} />:<BodyContainer dataSource={dataSource} />}
       </div>
       
     </div>

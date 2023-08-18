@@ -18,9 +18,7 @@ const contents = dataSource.map((posts,i) => {
 
 
     return(
-      <div onClick={()=>{
-        window.location.href = '/song/'+posts.uniqId
-      }} className="songRow" >
+      <Link to={'/song/'+posts.uniqId}  className="songRow" >
       <i class="fa fa-play-circle play" style={{position:'absolute'}}></i> 
 
 <div className="songRow__album">
@@ -32,7 +30,7 @@ const contents = dataSource.map((posts,i) => {
         <h1>{posts.title}</h1>
         
       </div>
-    </div>
+    </Link>
           )
 
     

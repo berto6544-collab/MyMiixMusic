@@ -19,7 +19,7 @@ const contents = dataSource.map((posts,i) => {
 
   return(
     <div onClick={()=>{
-      window.location.href = '/song/'+posts.uniqId
+      
     }} className="songRow" >
     
 

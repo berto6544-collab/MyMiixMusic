@@ -10,6 +10,7 @@ import * as Themes from './Utility/Theme';
 import NavBar from './components/Navbar';
 import NavBarUser from './components/userNavbar';
 import Footer from './pages/musicComponents/Footer';
+import FooterSpotify from './pages/musicComponents/FooterSpotify';
 import {loadStripe} from '@stripe/stripe-js';
 import API from './components/API/API';
 import SocketUtils from './Utility/SocketUtils';
@@ -83,6 +84,7 @@ const [Credit, setCredit] = React.useState("0");
 const [UserDatta, setUserData] = React.useState([]);
 const [userid,setuserId] = React.useState(0);
 const [Items,setItem] = React.useState(null);
+
 const [ItemSongSource,setItemSongSource] = React.useState([]);
 const [SongList,setSongList] = React.useState([]);
 const [dataSource,setDataSource] = React.useState(null);
@@ -91,6 +93,7 @@ const [songIndex,setSongIndex] = React.useState(0);
 const [loading,setloading] = React.useState(false);
 const [playing,setPlaying] = React.useState(false);
 const [theme,setTheme] = React.useState('light');
+const [Type,setType] = React.useState('normal');
 
 
 
@@ -152,6 +155,9 @@ React.useEffect(() =>{
     if(Object.keys(reactLocalStorage.getObject('SongData')).length > 0){
       setItemSongSource(reactLocalStorage.getObject('SongData'))
     }
+    if(reactLocalStorage.get("type")){
+    setType(reactLocalStorage.get("type"))
+    }
     
 },[])
 
@@ -159,7 +165,7 @@ React.useEffect(() =>{
         <>
         <Router >
         <Elements  stripe={stripePromise}>
-        <AuthApi.Provider value={{auth,setAuth,userid,setuserId,setSongIndex,songIndex,setPlaying,playing,SongList,setSongList,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
+        <AuthApi.Provider value={{auth,setAuth,userid,setuserId,setSongIndex,setType,Type,songIndex,setPlaying,playing,SongList,setSongList,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
        
 
         
@@ -173,7 +179,7 @@ React.useEffect(() =>{
         
          
         
-         {window.location.href == "https://"+window.location.host+"/create/post"?null:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />} 
+         {<div style={{width:'100%'}}> {Type == "Spotify" || Type == "spotify"?<FooterSpotify itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />}</div>} 
         </AuthApi.Provider>
         </Elements>
 

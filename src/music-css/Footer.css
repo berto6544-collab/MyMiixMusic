@@ -10,6 +10,19 @@
   background-color: black;
   transition: height 0.2s ease-out;
 }
+.footter {
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  bottom: 0;
+  height: 100px;
+  overflow: hidden;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 100%;
+  background-color: #282828;
+  transition: height 0.2s ease-out;
+}
 
 .expand{
   position: fixed;
