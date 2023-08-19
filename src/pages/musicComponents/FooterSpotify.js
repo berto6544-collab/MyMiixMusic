@@ -12,6 +12,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import "../../music-css/Footer.css";
 import { Grid, Slider } from "@mui/material";
 import AuthApi from "../../components/AuthApi";
+import ReactSpotify from 'react-spotify-player';
 import ReactPlayer from 'react-player';
 
 function FooterSpotify({ spotify,itemSource,playing,setPlaying}) {
@@ -47,8 +48,17 @@ React.useEffect(()=>{
 
   if(itemSource.length  == 0)return(
 
-<div className="footer">
+<div className="footter">
      
+     <div style={{display:'flex',position:'relative',flexDirection:'row',alignItems:'center',width:'100%',height:'100%'}}>
+
+      <div style={{borderRadius:'0.5rem',width:100,height:100,backgroundColor:'GrayText'}}>
+
+      </div>
+      <div style={{backgroundColor:'hsla(0,0%,100%,.3)',borderRadius:'.125rem',width:'100%',height:4}}></div>
+
+
+     </div>
 
       
     </div>
@@ -56,7 +66,7 @@ React.useEffect(()=>{
   );
   return (
     <div className={ !expand?"footter": "expand"}>
-
+    
     {UrlForMedia(itemSource[0].musicSrc,"",[],"Spotify",audioRef)}
 
     </div>
@@ -85,6 +95,13 @@ const content = datapast.map(function(word,i) {
   var separator = i < (datapast.length - 1) ? ' ' : '';
 
  
+  const size = {
+    width: '100%',
+    height: '100%',
+  };
+  const view = 'list'; // or 'coverart'
+  const theme = 'black'; // or 'white'
+
   
   if (word.match(/^https?\:\//)) {
 
@@ -112,6 +129,8 @@ if (word.match(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?track\/([a-zA-Z0-9_]+)/
     var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?track\//,'');
   return (
  
+   
+
    
     <iframe 
   style={{width:'100%',height:'90%'}} 

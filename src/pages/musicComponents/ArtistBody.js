@@ -1,13 +1,14 @@
 import React from "react";
 import "../../music-css/Body.css";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled"
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SongRow from "./SongArtistRow";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthApi from "../../components/AuthApi";
 import BodyInfo from "./BodyInfo";
-
+import {reactLocalStorage} from 'reactjs-localstorage';
 
 function Body({dataSource,setItemSource,searcch,setSearch,Search,ScrollData,userData}) {
 const Auth = React.useContext(AuthApi)
@@ -76,20 +77,34 @@ if(userData == null) return null;
 
       <div className="body__songs_artists">
         <div className="body__icons">
-          <PlayCircleFilledIcon
+          {Auth.playing == false?<PlayCircleFilledIcon
             className="body__shuffle"
             onClick={()=>{
+              Auth.setPlaying(true)
               Auth.setItemSongSource(hadleModify(dataSource[0]))
      
      
       
-     Auth.setItemSongSource(hadleModify(dataSource[0]))
      Auth.setIndex(0)
      Auth.setSongIndex(0)
-     Auth.setPlaying(true)
+     Auth.setType("normal")
+     reactLocalStorage.set("type","normal")
+     
             }}
             
           />
+        :<PauseCircleFilledIcon  
+        className="body__shuffle"
+        onClick={()=>{
+        Auth.setPlaying(false)
+        }}
+        
+        />
+        
+        }
+
+
+          
           <FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />
           <MoreHorizIcon />
         </div>

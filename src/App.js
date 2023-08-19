@@ -84,7 +84,8 @@ const [Credit, setCredit] = React.useState("0");
 const [UserDatta, setUserData] = React.useState([]);
 const [userid,setuserId] = React.useState(0);
 const [Items,setItem] = React.useState(null);
-
+const [currentTime, setCurrentTime] = React.useState(0);
+const [duration, setDuration] = React.useState(0);
 const [ItemSongSource,setItemSongSource] = React.useState([]);
 const [SongList,setSongList] = React.useState([]);
 const [dataSource,setDataSource] = React.useState(null);
@@ -92,6 +93,7 @@ const [index,setIndex] = React.useState(0);
 const [songIndex,setSongIndex] = React.useState(0);
 const [loading,setloading] = React.useState(false);
 const [playing,setPlaying] = React.useState(false);
+const [expand,setExpand] = React.useState(false);
 const [theme,setTheme] = React.useState('light');
 const [Type,setType] = React.useState('normal');
 
@@ -151,13 +153,14 @@ React.useEffect(() =>{
     readUser()
     }
     
-    
+    if(reactLocalStorage.get("type")){
+      setType(reactLocalStorage.get("type"))
+      }
+
     if(Object.keys(reactLocalStorage.getObject('SongData')).length > 0){
       setItemSongSource(reactLocalStorage.getObject('SongData'))
     }
-    if(reactLocalStorage.get("type")){
-    setType(reactLocalStorage.get("type"))
-    }
+    
     
 },[])
 
@@ -165,7 +168,7 @@ React.useEffect(() =>{
         <>
         <Router >
         <Elements  stripe={stripePromise}>
-        <AuthApi.Provider value={{auth,setAuth,userid,setuserId,setSongIndex,setType,Type,songIndex,setPlaying,playing,SongList,setSongList,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
+        <AuthApi.Provider value={{auth,setAuth,userid,setuserId,setSongIndex,setExpand,expand,setType,Type,songIndex,setPlaying,playing,SongList,setSongList,currentTime,setCurrentTime,duration,setDuration,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
        
 
         

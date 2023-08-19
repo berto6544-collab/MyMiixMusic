@@ -17,7 +17,7 @@ const contents = dataSource.map((posts,i) => {
 
 
   return(
-    <Link to={'/artist/'+posts.username} className="songRow" >
+    <a href={'/artist/'+posts.username} className="songRow" >
     
     <i class="fa fa-play-circle play" style={{position:'absolute'}}></i> 
 
@@ -30,7 +30,7 @@ const contents = dataSource.map((posts,i) => {
       <h1>{posts?.name}</h1>
       
     </div>
-  </Link>
+  </a>
         )
 
   });

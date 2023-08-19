@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {reactLocalStorage} from 'reactjs-localstorage';
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleFilled";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import VolumeDownIcon from "@mui/icons-material/VolumeDown";
 import VolumeMuteIcon from "@mui/icons-material/VolumeMute";
-import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleFilled";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import "../../music-css/Footer.css";
 import { Grid, Slider } from "@mui/material";
@@ -24,8 +24,8 @@ const Auth = React.useContext(AuthApi)
 
   const [songIndex,setsongIndex] = React.useState(0);
   const [playingg,setPlayingg] = React.useState(playing);
-  const [currentTime, setCurrentTime] = useState(0);
-const [duration, setDuration] = useState(0);
+  //const [currentTime, setCurrentTime] = useState(0);
+//const [duration, setDuration] = useState(0);
 const [sound, setSound] = useState(1);
 const [loop, setLoop] = useState(false);
 const [expand, setExpand] = useState(false);
@@ -98,12 +98,12 @@ const skipNext = () =>{
 
 const skipPrevious = () =>{
   if(Auth.songIndex <= 0){
-  if(Auth.index >= Auth.SongList.length-1)return;
+  if(Auth.index <= 0)return;
   Auth.setSongIndex(0)
   Auth.setIndex(Auth.index-1)
   Auth.setPlaying(true)
   setPlayingg(true)
-  Auth.setItemSongSource(hadleModify(Auth.SongList[Auth.index]))
+  Auth.setItemSongSource(hadleModify(Auth.SongList[Auth.index-1]))
 
 
   }else{
@@ -120,18 +120,22 @@ const skipPrevious = () =>{
 
 const handlePlay = () => {
   
-  setPlayingg(true);
+  Auth.setPlaying(true);
+  if(Auth.Type == "Youtube"){
+    Auth.setExpand(true)
+  }
   //audioRef.current.play();
 };
 
 const handlePause = () => {
  
-  setPlayingg(false);
+  Auth.setPlaying(false);
+  Auth.setExpand(false)
   //audioRef.current.pause();
 };
 
 const handlePlayPause = () => {
-  if (playingg) {
+  if (Auth.playing) {
     handlePause();
   } else {
     handlePlay();
@@ -139,13 +143,13 @@ const handlePlayPause = () => {
 };
 
 const handleTimeUpdate = () => {
-  setCurrentTime(audioRef.current.getCurrentTime());
-  setDuration(audioRef.current.getDuration());
+  Auth.setCurrentTime(audioRef.current.getCurrentTime());
+  Auth.setDuration(audioRef.current.getDuration());
 };
 
 const handleSeekUpdate = () => {
-  setCurrentTime(audioRef.current.getCurrentTime());
-  setDuration(audioRef.current.getDuration());
+  Auth.setCurrentTime(audioRef.current.getCurrentTime());
+  Auth.setDuration(audioRef.current.getDuration());
 };
 
 const handleOnVolumeChange = () =>{
@@ -168,12 +172,12 @@ const handleLoop = () =>{
 }
 
 const handleExpand = () =>{
-  setExpand(!expand);
+  Auth.setExpand(!Auth.expand);
 }
 
 const handleSeek = (e) => {
   audioRef.current.seekTo(e.target.value,'seconds');
-  setCurrentTime(e.target.value);
+  Auth.setCurrentTime(e.target.value);
 };
 
 function formatDuration(durationSeconds) {
@@ -188,8 +192,9 @@ function formatDuration(durationSeconds) {
 <div className="footer">
       <div className="footer__left">
      
-        <img
+        <div
           className="footer__albumLogo"
+          style={{backgroundColor:'GrayText'}}
           src={''}
           alt={''}
         />
@@ -244,22 +249,50 @@ function formatDuration(durationSeconds) {
 
   );
   return (
-    <div className={ !expand?"footer": "expand"}>
+    <div className={ !Auth.expand?"footer": "expand"}>
 
 
-      <div className={!expand?"footer__left":'footer__leftExpand'}>
-      {!expand?
+      <div className={!Auth.expand?"footer__left":'footer__leftExpand'}>
+      {!Auth.expand?
       <i onClick={handleExpand} style={{color:'white'}} class="fa fa-chevron-up"></i> 
       :
       <div style={{width:'100%',display:'flex',alignItems:'center',justifyContent:'flex-end'}}><i onClick={handleExpand} style={{color:'white'}} class="fa fa-chevron-down"></i></div>
       }
-        <img
-          className={!expand?"footer__albumLogo":"footer__albumLogoExpand"}
+        {Auth.Type != "Youtube" || Auth.Type == "Youtube" && Auth.expand == false?<img
+          className={!Auth.expand?"footer__albumLogo":"footer__albumLogoExpand"}
           src={itemSource[Auth.songIndex].cover}
           alt={''}
-        />
+        />:null}
+        <ReactPlayer className={"footer__albumLogoExpand"} width={'100%'} height={350} style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none'}}
+      onCanPlay={(e)=>{
+        //Auth.setPlaying
+        setPlaying(Auth.playing)
+      }}
+
+      
+      
+      autoPlay={Auth.playing} ref={audioRef} onEnded={(e)=>{
+
+       if(!loop) return skipNext();
+
+
+
+      }} 
+      
+      onPlay={handleTimeUpdate}
+      onSeek={handleTimeUpdate}
+      onProgress={handleTimeUpdate}
+      onVolumeChange={handleOnVolumeChange}
+      volume={sound}
+      
+      loop={loop} progressInterval={Auth.currentTime} playing={Auth.playing} playsInline={true} url={itemSource[Auth.songIndex]?.musicSrc} >
+        
+       
+
+      </ReactPlayer>
+
         {itemSource ? (
-          <div className={!expand?"footer__songInfo":"footer__songInfo_expand"}>
+          <div className={!Auth.expand?"footer__songInfo":"footer__songInfo_expand"}>
             <h4>{itemSource[Auth.songIndex]?.name.substring(0,25)}</h4>
             <p>{itemSource[Auth.songIndex]?.singer}</p>
           </div>
@@ -271,55 +304,57 @@ function formatDuration(durationSeconds) {
         )}
       </div>
 
-      <div className={!expand ?"footer__center":"footer__centerExpand"}>
+      <div className={!Auth.expand ?"footer__center":"footer__centerExpand"}>
         
        <div style={{display:'flex',width:'100%',flexDirection:'column',alignItems:'center'}}> 
         
         <div style={{display:'flex',alignItems:'center'}}>
-        <RepeatIcon style={{color:loop?'rgb(0, 123, 255)':'white'}} onClick={handleLoop} className="footer__green" />
-        <SkipPreviousIcon onClick={skipPrevious} className="footer__icon" />
-        {playingg ? (
+        <RepeatIcon style={{color:loop?'rgb(0, 123, 255)':'white',fontSize:30}} onClick={handleLoop} className="footer__green" />
+        <SkipPreviousIcon onClick={skipPrevious} style={{fontSize:30}} className="footer__icon" />
+        {Auth.playing ? (
           <PauseCircleOutlineIcon
             onClick={handlePlayPause}
             fontSize="large"
             className="footer__icon"
+            style={{fontSize:50}}
           />
         ) : (
           <PlayCircleOutlineIcon
             onClick={handlePlayPause}
             fontSize="large"
             className="footer__icon"
+            style={{fontSize:50}}
           />
         )}
-        <SkipNextIcon onClick={skipNext} className="footer__icon" />
+        <SkipNextIcon style={{fontSize:30}} onClick={skipNext} className="footer__icon" />
         
-        <PlaylistPlayIcon onClick={()=>{
+        <PlaylistPlayIcon  style={{fontSize:30}} onClick={()=>{
           setExpandPlaylist(true)
-          setExpand(true)          }}  />
+          Auth.setExpand(true)          }}  />
         </div>
         <input
         type="range"
         min="0"
-        max={duration}
-        value={currentTime}
+        max={Auth.duration}
+        value={Auth.currentTime}
         className={'InputCurrentTime'}
         onChange={handleSeek}
         style={{width:'100%'}}
       />
         <div style={{display:'flex',justifyContent:'space-between',width:'100%'}} className="track-duration">
-        <p>{formatDuration(currentTime)}</p>
-        <p>{formatDuration(duration)}</p>
+        <p>{formatDuration(Auth.currentTime)}</p>
+        <p>{formatDuration(Auth.duration)}</p>
       </div>
           </div>
 
       </div>
-      <div className={!expand ?"footer__right":"footer__rightExpand"}>
+      <div className={!Auth.expand ?"footer__right":"footer__rightExpand"}>
         <Grid container spacing={2}>
           <Grid item>
             
           </Grid>
           <Grid item>
-            {!isMuted?<VolumeDownIcon />:<VolumeMuteIcon />}
+            {!isMuted?<VolumeDownIcon  />:<VolumeMuteIcon />}
           </Grid>
           <Grid item xs>
             <input type={'range'} defaultValue={1} style={{width:'100%'}} min={0} max={1} step={0.01} value={sound}
@@ -371,33 +406,7 @@ function formatDuration(durationSeconds) {
 
 
 </div>
-<ReactPlayer style={{display:'none'}}
-      onCanPlay={(e)=>{
-        //Auth.setPlaying
-        setPlayingg(playing)
-      }}
-
-      
-      
-      autoPlay={playingg} ref={audioRef} onEnded={(e)=>{
-
-       if(!loop) return skipNext();
-
-
-
-      }} 
-      
-      onPlay={handleTimeUpdate}
-      onSeek={handleTimeUpdate}
-      onProgress={handleTimeUpdate}
-      onVolumeChange={handleOnVolumeChange}
-      volume={sound}
-      
-      loop={loop} progressInterval={currentTime} playing={playingg} playsInline={true} url={itemSource[Auth.songIndex]?.musicSrc} >
-        
-       
-
-      </ReactPlayer>
+  
 
     </div>
   );

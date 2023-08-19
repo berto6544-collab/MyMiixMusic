@@ -4,10 +4,10 @@
   justify-content: space-between;
   bottom: 0;
   padding: 20px;
-  height: 100px;
+  height: 110px;
   overflow: hidden;
   width: 100%;
-  background-color: black;
+  background-color: #282828;
   transition: height 0.2s ease-out;
 }
 .footter {
@@ -27,14 +27,15 @@
 .expand{
   position: fixed;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  margin-right: 0px;
   bottom: 0;
-  padding: 20px;
+  padding: 0.5rem;
   height: 100vh;
   flex-direction: column;
   overflow: hidden;
   width: 100%;
-  background-color: black;
+  background-color: #282828;
   transition: height 0.2s ease-out;
   z-index: 100;
 
@@ -108,13 +109,7 @@
 
 
 
-.footer__albumLogo {
-  height: 60px;
-  width: 60px;
-  margin-right: 20px;
-  object-fit:cover;
-  border-radius: 0.4rem;
-}
+
 
 
 
@@ -142,14 +137,24 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    
+    width: 100%;
+  }
+
+  .footer__albumLogo {
+    height: 60px;
+    width: 60px;
+    margin-right: 20px;
+    object-fit:cover;
+    border-radius: 0.4rem;
   }
 
   .footer__albumLogoExpand {
-    height: 200px;
+    height: 300px;
     width: 100%;
+    align-self: center;
     object-fit:cover;
     border: 3px solid white;
+    margin-right: 0px;
     margin-bottom: 10px;
   }
   .footer__right {
@@ -191,7 +196,16 @@
     justify-content: space-between;
     align-items: center;
     color: white;
+    width: 100%;
     
+  }
+
+  .footer__albumLogo {
+    height: 60px;
+    width: 60px;
+    margin-right: 20px;
+    object-fit:cover;
+    border-radius: 0.4rem;
   }
 
   .footer__albumLogoExpand {
@@ -199,6 +213,7 @@
     width: 300px;
     object-fit:cover;
     border: 3px solid white;
+    margin-right: 0px;
     margin-bottom: 10px;
   }
   
@@ -241,7 +256,15 @@
     justify-content: space-between;
     align-items: center;
     color: white;
-    
+    width: 100%;
+  }
+
+  .footer__albumLogo {
+    height: 60px;
+    width: 60px;
+    margin-right: 20px;
+    object-fit:cover;
+    border-radius: 0.4rem;
   }
 
   .footer__albumLogoExpand {
@@ -249,6 +272,7 @@
     width: 300px;
     object-fit:cover;
     border: 3px solid white;
+    margin-right: 0px;
     margin-bottom: 10px;
   }
   

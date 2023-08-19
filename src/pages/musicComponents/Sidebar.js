@@ -15,7 +15,7 @@ function Sidebar() {
       <SidebarOption href={'/libary'} Icon={'b'} option="Your Library" />
       <SidebarOption href={'/explore/Spotify'} Icon={'b'} option="Spotify" />
       <SidebarOption href={'/explore/Soundcloud'} Icon={'b'} option="SoundCloud" />
-      <SidebarOption href={'/explore/Youtube'} Icon={'b'} option="Youtube" />
+      <SidebarOption href={'/explore/Youtube'} Icon={'b'} option="YouTube" />
       <br />
      
     </div>

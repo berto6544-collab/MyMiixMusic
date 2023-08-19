@@ -97,7 +97,7 @@ Auth.setIndex(index)
     <div className="player">
       
       <div className="player__body">
-        {/*<Sidebar />*/}
+        {<Sidebar />}
         {dataSource != null ?<Body dataSource={dataSource} />:<BodyContainer dataSource={dataSource} />}
       </div>
       
