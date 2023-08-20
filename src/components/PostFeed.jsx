@@ -577,7 +577,7 @@ setDate(e.target.value);
 
 console.log(e.target.value)
 }} type={'datetime-local'}     />
-<div style={{display:'flex',width:'100%',alignItems:'center',flexDirection:'row',justifyContent:'space-evenly'}}>
+<div style={{display:'flex',width:'100%',alignItems:'center',flexDirection:'row',marginTop:20,justifyContent:'space-evenly'}}>
 
 <Button  onClick={()=>{
 setShowDate(false)

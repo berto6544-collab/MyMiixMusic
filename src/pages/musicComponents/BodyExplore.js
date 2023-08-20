@@ -10,6 +10,7 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 import InfiniteScroll  from "react-infinite-scroll-component";
 import BodyInfo from "./BodyInfo";
 import '../../music-css/SongColumn.css'
+import Sidebar from "./Sidebar";
 
 
 
@@ -67,7 +68,7 @@ info={''}  name={q} title={''} />
 
       <div className="body__songs_artists">
         
-
+      
       <InfiniteScroll 
 dataLength={dataSource.length}
 className={'grid'}

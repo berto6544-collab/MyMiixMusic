@@ -89,16 +89,16 @@ const handleOnClickLogOut = () =>{
     
   
   
-  
+  Cookies.remove('SCOM',{domain:'.mymiix.com'})
+    Cookies.remove('SCOM_',{domain:'.mymiix.com'})
+    Cookies.remove('userId',{domain:'.mymiix.com'})
     Auth.setAuth("");
     Auth.setuserId("");
     Auth.setUserData([]);
     Auth.setTheme(theme)
-    Cookies.remove('SCOM')
-    Cookies.remove('userId')
-    Cookies.remove('SCOM',{domain:'.mymiix.com'})
-    Cookies.remove('SCOM_',{domain:'.mymiix.com'})
-    Cookies.remove('userId',{domain:'.mymiix.com'})
+    
+   
+   
     reactLocalStorage.clear();
     document.body.style.backgroundColor = Themes[theme].BackgroundColor;
 document.body.style.color = Themes[theme].Color;
@@ -107,7 +107,7 @@ Auth.setTheme(theme);
 window.location.href = "/";
 
 
-fetch(process.env.REACT_APP_PUBLIC+'/logout.php')
+fetch('https://mymiix.com/public/logout.php')
 .then(response => {response.text()})
 .then(responseJSON => {
   Auth.setAuth("");
@@ -127,6 +127,7 @@ const handleOnClicksignin = () =>{
   
   
 }
+
 
 const handleClose = () => {
   setShow(false);
@@ -199,6 +200,11 @@ const onClicks = () =>{
         <div style={{backgroundColor: 'black',color:'white',position:'sticky',top:0}}  className="navbar" >
           
             <div className="leftContainer">
+            <i  className={Auth.openMenu == false?"fa fa-chevron-right arrow":"fa fa-chevron-left arrow" } 
+            onClick={()=>{
+              Auth.setOpenMenu(!Auth.openMenu)
+            }}
+            style={{color:'white',borderRight:'0.1px solid rgba(255,255,255, 0.2)'}}></i>
             <a href={'/'} style={{display:'flex',paddingLeft:10,flexDirection:'row',alignItems:'center'}}>
             <img src={'https://mymiix.com/public/assets/img/logowhite.png'}  className="logo"></img>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',lineHeight:1,position:'relative'}}>
@@ -228,7 +234,7 @@ const onClicks = () =>{
 
 
             <div className={'navtop'}>
-            {window.location.href.match(/(donate)/gi)?null:<a  style={{color:'white',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'rgb(0, 123, 255)',borderRadius:30 }} onClick={()=>setShowDonate(true)}>Donate</a>}
+            {/*window.location.href.match(/(donate)/gi)?null:<a  style={{color:'white',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'rgb(0, 123, 255)',borderRadius:30 }} onClick={()=>setShowDonate(true)}>Donate</a>*/}
             </div>
             {Auth.UserDatta.length > 0 && Auth.UserDatta[0].ProfileImage ? <img onClick={onClicks} style={{width:40,cursor:'pointer',height:40,objectFit:'cover',borderRadius:40,marginRight:10}} src={Auth.UserDatta[0].ProfileImage} />:<i onClick={onClicks} style={{fontSize:'25px'}} className="fa fa-bars"/>}
             
@@ -333,7 +339,7 @@ const onClicks = () =>{
 
             
             <a style={{ width:'100%',textDecoration:'none',color:Themes[Utils.getThemeMode()].Color}} onClick={(e)=>{
-              e.preventDefault();
+              //e.preventDefault();
               handleOnClickLogOut();
             }}><div style={{width:'100%',height:50,padding:10,flexDirection:'row',alignItems:'center'}}>
             <div  style={{width:'100%',flexDirection:'row',alignItems:'center',}}><i className="fa fa-sign-out"></i>sign out <i  style={{float:'right', alignSelf:'center',}} className="fa fa-chevron-right"></i></div>

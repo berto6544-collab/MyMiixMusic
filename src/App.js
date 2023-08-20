@@ -80,7 +80,7 @@ const music = [{
     'https://res.cloudinary.com/ehsanahmadi/video/upload/v1573550770/Sirvan-Khosravi-Dorost-Nemisham-128_kb8urq.mp3',
 }];
 const [auth, setAuth] = React.useState("");
-const [Credit, setCredit] = React.useState("0");
+const [openMenu, setOpenMenu] = React.useState(false);
 const [UserDatta, setUserData] = React.useState([]);
 const [userid,setuserId] = React.useState(0);
 const [Items,setItem] = React.useState(null);
@@ -168,7 +168,7 @@ React.useEffect(() =>{
         <>
         <Router >
         <Elements  stripe={stripePromise}>
-        <AuthApi.Provider value={{auth,setAuth,userid,setuserId,setSongIndex,setExpand,expand,setType,Type,songIndex,setPlaying,playing,SongList,setSongList,currentTime,setCurrentTime,duration,setDuration,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
+        <AuthApi.Provider value={{auth,setAuth,setOpenMenu,openMenu,userid,setuserId,setSongIndex,setExpand,expand,setType,Type,songIndex,setPlaying,playing,SongList,setSongList,currentTime,setCurrentTime,duration,setDuration,setIndex,index,setItemSongSource,ItemSongSource,dataSource,setDataSource,setItem,Items,setUserData,UserDatta}}>
        
 
         

@@ -9,9 +9,9 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
   
 
   const hadleModify = (items) =>{
-    const arraySong = [];
+
     if(items.postimg != ""){
-    
+    const arraySong = [];
     const Song = items.postimg.split(",");
     Song.forEach((post, ind) => {
     
@@ -29,10 +29,11 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
   
     })
     
-   
+    reactLocalStorage.setObject("SongData",arraySong)
   
+   return arraySong;
     }else{
-      
+      const arraySong = [];
       
       
       
@@ -50,14 +51,11 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
     
      
       
+        reactLocalStorage.setObject("SongData",arraySong)
     
-    
-     
-       
+     return arraySong;
+      
     }
-
-   reactLocalStorage.setObject("SongData",arraySong)
-   return [...arraySong];
   }
 
 
@@ -74,18 +72,32 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
     Auth.setSongIndex(0)
 
     
+      
+
+      if(item.types == "spotify" || item.types == "Spotify"){
+        Auth.setType("Spotify")
+        Auth.setExpand(true);
+        reactLocalStorage.set("type","Spotify")
+        
+      }
+    else if(item.types == "Youtube" || item.types == "youtube"){
+      Auth.setType("Youtube")
+      reactLocalStorage.set("type","Youtube")
+     }
+
+     else{
       Auth.setType("normal")
       reactLocalStorage.set("type","normal")
-     
+     }
 
     }}>
       <div className={'songRow__album'} style={{position:'relative',fontSize:40}}>
       {index == Auth.index?<i class="fa fa-play-circle play" style={{position:'absolute',bottom:'10%',left:'10%',color:'rgba(0,0,0,0.8)'}}></i>:null}
-      <img className="songRow__album" src={item.art} alt="" />
+      <img className="songRow__album" src={item.SongData.length > 0?item.art:item.URLData[0].img} alt="" />
       </div>
       <div className="songRow__info">
-        <h1>{item.SongData[0].name}</h1>
-        <p>{item.SongData[0].artist}</p>
+        <h1>{item.SongData.length > 0? item.SongData[0].name:item.title}</h1>
+        <p>{item.SongData.length > 0? item.SongData[0].artist:item.types}</p>
       </div>
     </div>
   );

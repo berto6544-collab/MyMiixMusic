@@ -130,7 +130,7 @@ const handlePlay = () => {
 const handlePause = () => {
  
   Auth.setPlaying(false);
-  Auth.setExpand(false)
+  //Auth.setExpand(false)
   //audioRef.current.pause();
 };
 
@@ -263,7 +263,7 @@ function formatDuration(durationSeconds) {
           src={itemSource[Auth.songIndex].cover}
           alt={''}
         />:null}
-        <ReactPlayer className={"footer__albumLogoExpand"} width={'100%'} height={350} style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none'}}
+        <ReactPlayer className={"footer__albumLogoExpand"}  width={'100%'} height={350} style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none',border:0}}
       onCanPlay={(e)=>{
         //Auth.setPlaying
         setPlaying(Auth.playing)

@@ -54,7 +54,7 @@ return(<div style={{ width:"100%",marginTop:30 }}>
      
        </div>
      </div>
-<a style={{textDecoration:'none'}} href={"/explore/New_Releases"} ><b>Show All</b></a>
+<a style={{textDecoration:'none'}} href={"/explore/New_Releases"} ><b>ShowAll</b></a>
 
 </div>
 

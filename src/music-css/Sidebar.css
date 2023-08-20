@@ -16,7 +16,7 @@
 @media(min-width:230px)
 {
   .sidebar {
-    display: flex;
+    display: none;
     flex-direction: column;
     padding-right: 0px;
     min-width: 0px;

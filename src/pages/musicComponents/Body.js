@@ -9,6 +9,7 @@ import SongRow from "./SongRow";
 import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import BodyInfo from "./BodyInfo";
+import Sidebar from "./Sidebar";
 
 
 function Body({dataSource}) {
@@ -75,10 +76,12 @@ if(dataSource == null) return null;
     <div className="body-artist">
 
 
-      
+     
 <BodyInfo art={dataSource.art != ""?dataSource.art : dataSource.URLData[Auth.songIndex].img } info={'PLAYLIST'} dataSource={dataSource}  name={dataSource.postimg != "" ?dataSource.SongData[Auth.songIndex].name:dataSource.URLData[Auth.songIndex].title} title={''} />
 
+
       <div className="body__songs_artists">
+        
         <div className="body__icons">
           {Auth.playing == false?<PlayCircleFilledIcon
             className="body__shuffle"

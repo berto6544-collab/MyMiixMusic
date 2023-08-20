@@ -105,7 +105,7 @@ Auth.setIndex(index)
     <div className="player">
       
       <div className="player__body">
-        {/*<Sidebar />*/}
+        {<Sidebar />}
         {dataSource != null ?<Body dataSource={dataSource} searcch={search} setSearch={setSearch} Search={SearchData} scroll={Scroll} q={q} />:<BodyContainer dataSource={dataSource} />}
       </div>
       

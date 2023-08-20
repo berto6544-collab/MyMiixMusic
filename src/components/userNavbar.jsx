@@ -169,6 +169,12 @@ const onClicks = () =>{
         <div style={{backgroundColor: 'black',color:'white',position:'sticky',top:0}}  className="navbar" >
           
             <div className="leftContainer">
+
+            <i  className={Auth.openMenu == false?"fa fa-chevron-right arrow":"fa fa-chevron-left arrow" } 
+            onClick={()=>{
+              Auth.setOpenMenu(!Auth.openMenu)
+            }}
+            style={{color:'white',borderRight:'0.1px solid rgba(255,255,255, 0.2)',paddingRight:20}}></i>
             <a href={'/'} style={{display:'flex',paddingLeft:10,flexDirection:'row',alignItems:'center'}}>
             
             <img src={'https://mymiix.com/public/assets/img/logowhite.png'}  className="logo"></img>

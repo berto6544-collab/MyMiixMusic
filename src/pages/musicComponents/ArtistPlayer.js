@@ -127,7 +127,7 @@ setStart(start +1)
 
 const ScrollData = () =>{
 
-API.API.MusicDataUserScroll(user,start)
+API.API.MusicDataUserScroll(user,start,search)
 .then(response=>{
 
 if(response.length > 0){ 
@@ -144,7 +144,7 @@ setStart(start +1)
   return (
     <div className="player">
       <div className="player__body">
-        {/*<Sidebar />*/}
+        {<Sidebar />}
         {dataSource.length > 0?<Body dataSource={dataSource} searcch={search} setSearch={setSearch} Search={SearchData} setItemSource={setItemSource}  ItemSource={ItemSource} ScrollData={ScrollData} setIndex={setIndex} userData={dataUserSource} setDataSource={setDataSource} />
         :<BodyContainer dataSource={dataSource} setItemSource={setItemSource}  ItemSource={ItemSource} ScrollData={ScrollData} setIndex={setIndex} userData={dataUserSource} setDataSource={setDataSource}  />}
      
