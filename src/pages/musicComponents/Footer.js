@@ -45,6 +45,7 @@ React.useEffect(()=>{
 
 const hadleModify = (items) =>{
 
+  if(items.postimg != ""){
   const arraySong = [];
   const Song = items.postimg.split(",");
   Song.forEach((post, ind) => {
@@ -62,11 +63,43 @@ const hadleModify = (items) =>{
     
 
   })
-  console.log(arraySong)
-  reactLocalStorage.setObject("SongData",arraySong)
+  
+ 
 
  return arraySong;
+  }else{
+    const arraySong = [];
+    
+    
+    
+      
+      arraySong.push({
+        musicSrc:items.URLData[0].url,
+        cover:items.URLData[0].img,
+        name:items.URLData[0].title,
+        singer:""    
   
+      })
+  
+    
+      
+  
+      
+     if(items?.types == "Youtube" || items?.types == "youtube"){
+      Auth.setType("Youtube")
+      reactLocalStorage.set("type","Youtube")
+     }
+
+     else{
+      Auth.setType("normal")
+      reactLocalStorage.set("type","normal")
+     }
+    
+  
+  
+   return arraySong;
+    
+  }
 }
 
 
@@ -76,10 +109,12 @@ const skipNext = () =>{
 
     if(Auth.index >= Auth.SongList.length-1)return;
     Auth.setSongIndex(0)
+    //Auth.setPlaying(false)
     Auth.setIndex(Auth.index+1)
-    Auth.setPlaying(true)
-    setPlayingg(true)
     Auth.setItemSongSource(hadleModify(Auth.SongList[Auth.index+1]))
+   
+    Auth.setPlaying(true)
+    
     
 
 
@@ -263,7 +298,11 @@ function formatDuration(durationSeconds) {
           src={itemSource[Auth.songIndex].cover}
           alt={''}
         />:null}
-        <ReactPlayer className={"footer__albumLogoExpand"}  width={'100%'} height={350} style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none',border:0}}
+        <ReactPlayer className={"footer__albumLogoExpand"} 
+        
+        width={'100%'} height={350} 
+        
+        style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none',border:0}}
       onCanPlay={(e)=>{
         //Auth.setPlaying
         setPlaying(Auth.playing)
@@ -274,8 +313,8 @@ function formatDuration(durationSeconds) {
       autoPlay={Auth.playing} ref={audioRef} onEnded={(e)=>{
 
        if(!loop) return skipNext();
-
-
+         audioRef.current.seekTo(0,'seconds');
+         Auth.setPlaying(true)
 
       }} 
       

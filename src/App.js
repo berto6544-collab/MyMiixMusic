@@ -203,7 +203,7 @@ const Routess = ({UserData}) =>{
       
         <Routes >
             <Route path={"/song/:uniqId"} exact  element={<Player spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
-            <Route path={"/create/post"} exact  element={<Post spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
+            <Route path={"/upload/"} exact  element={<Post spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/artist/:user"} exact  element={<ArtistPlayer spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/explore/:q"} exact  element={<PlayerExplorer spotify={UserData.length > 0 ?UserData:[]} userData={UserData.length > 0 ?UserData:[]} />}  />
             <Route path={"/Donate/:user"} exact userData={UserData.length > 0 ?UserData:[]} element={<Donate userData={UserData.length > 0 ?UserData:[]} />}  />

@@ -9,6 +9,8 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthApi from "../../components/AuthApi";
 import BodyInfo from "./BodyInfo";
 import {reactLocalStorage} from 'reactjs-localstorage';
+import { Button } from "@mui/material";
+
 
 function Body({dataSource,setItemSource,searcch,setSearch,Search,ScrollData,userData}) {
 const Auth = React.useContext(AuthApi)
@@ -18,7 +20,7 @@ const [index,setIndex] =  React.useState(0);
 
 const hadleModify = (items) =>{
 
-  if(items.postimg == ""){
+  if(items.postimg != ""){
   const arraySong = [];
   const Song = items.postimg.split(",");
   Song.forEach((post, ind) => {
@@ -66,6 +68,28 @@ const hadleModify = (items) =>{
   }
 }
 
+
+const Follow = async() => {
+  
+    
+  await fetch('https://music.mymiix.com/api/follow?id='+userData?.UserId+"&status=Profile&func=Follow",{
+    method:'POST'
+  });
+ 
+ if(userData.following == "0"){
+  userData['following'] = "1"; 
+  
+ }else{
+  userData['following'] = "0"; 
+ }
+  
+   
+   
+   
+   }
+
+
+
 if(userData == null) return null;
   return (
     <div className="body-artist">
@@ -104,9 +128,11 @@ if(userData == null) return null;
         }
 
 
+          {userData?.following == "0"?<Button variant={'contained'} style={{borderRadius:'3rem',padding:10,paddingLeft:20,paddingRight:20}} onClick={()=>Follow()}>Follow</Button>:<Button variant={'outlined'} style={{borderRadius:'3rem',padding:10,paddingLeft:20,paddingRight:20,color:'white',border:'1px solid white'}} onClick={()=>Follow()}>Following</Button>}
           
-          <FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />
-          <MoreHorizIcon />
+         
+          {/*<FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />*/}
+          <MoreHorizIcon style={{marginLeft:20}} />
         </div>
 
 <InfiniteScroll 
@@ -140,5 +166,10 @@ return(<SongRow key={item.id}   item={item} index={i} setIndex={setIndex} setIte
     </div>
   );
 }
+
+
+
+
+
 
 export default Body;

@@ -72,7 +72,7 @@ const hadleModify = (items) =>{
   
  
 
- return [...arraySong];
+ return arraySong;
   }else{
     
     
@@ -95,7 +95,7 @@ const hadleModify = (items) =>{
   
   
    
-      return [...arraySong]; 
+      return arraySong; 
   }
 }
 
@@ -107,13 +107,13 @@ const SearchData = () =>{
   .then(response=>{
   
   if(response.length > 0){ 
-setDataSource([...response])
+setDataSource(response)
 
 
 setItemSource(hadleModify(response[0]))
 
 Auth.setItem(response[0])
-Auth.setSongList([...response])
+Auth.setSongList(response)
 //Auth.setIndex(index)
 setStart(start +1)
   

@@ -7,6 +7,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import SongRow from "../../pages/musicComponents/SongArtistRow";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AuthApi from "../AuthApi";
+import { Button } from "@mui/material";
 
 
 function Body({setItemSource,ScrollData}) {
@@ -100,8 +101,8 @@ const [dataSource, setDataSource] = React.useState([
             
             
           />
-          <FavoriteIcon fontSize="large" />
-          <MoreHorizIcon />
+         <Button variant={'contained'} style={{borderRadius:'3rem',padding:10,paddingLeft:20,paddingRight:20}}>Follow</Button>
+          <MoreHorizIcon style={{marginLeft:20}} />
         </div>
 
 <InfiniteScroll 
