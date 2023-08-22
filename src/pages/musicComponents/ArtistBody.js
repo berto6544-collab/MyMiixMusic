@@ -20,17 +20,18 @@ const [index,setIndex] =  React.useState(0);
 
 const hadleModify = (items) =>{
 
-  if(items.postimg != ""){
   const arraySong = [];
   const Song = items.postimg.split(",");
-  Song.forEach((post, ind) => {
+  if(items.SongData.length > 0){
+
+  items.SongData.forEach((post, ind) => {
   
     
     arraySong.push({
-      musicSrc:post,
+      musicSrc:Song[index],
       cover:items.art,
-      name:items.SongData[ind].name,
-      singer:items.SongData[ind].artist    
+      name:post.name,
+      singer:post.artist    
 
     })
 
@@ -40,14 +41,14 @@ const hadleModify = (items) =>{
   })
   
  
-
+  reactLocalStorage.setObject("SongData",arraySong)
  return arraySong;
   }else{
-    const arraySong = [];
+   
     
     
     
-      
+      if(items.URLData.length > 0){
       arraySong.push({
         musicSrc:items.URLData[0].url,
         cover:items.URLData[0].img,
@@ -56,12 +57,21 @@ const hadleModify = (items) =>{
   
       })
   
+      }else{
+        arraySong.push({
+          musicSrc:Song[0],
+          cover:items.art,
+          name:items?.title,
+          singer:""    
     
+        })
+
+      }
       
   
    
     
-  
+      reactLocalStorage.setObject("SongData",arraySong)
   
    return arraySong;
     

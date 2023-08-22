@@ -10,17 +10,17 @@ function SongRow({item,dataSource,setItemSource,q,index,setIndex}) {
   const hadleModify = (items) =>{
 
     const arraySong = [];
-    if(items.postimg != ""){
-    
     const Song = items.postimg.split(",");
-    Song.forEach((post, ind) => {
+    if(items.SongData.length > 0){
+    
+    items.SongData.forEach((post, ind) => {
     
       
       arraySong.push({
-        musicSrc:post,
+        musicSrc:Song[index],
         cover:items.art,
-        name:items.SongData[ind].name,
-        singer:items.SongData[ind].artist    
+        name:post.name,
+        singer:post.artist    
   
       })
   
@@ -28,33 +28,43 @@ function SongRow({item,dataSource,setItemSource,q,index,setIndex}) {
       
   
     })
+    
    
     reactLocalStorage.setObject("SongData",arraySong)
-
    return arraySong;
-  }else{
-
-   
-    
+    }else{
+      const arraySong = [];
       
-      arraySong.push({
-        musicSrc:items.SongData[0].url,
-        cover:items.SongData[0].img,
-        name:items.SongData[0].title,
-        singer:""    
-  
-      })
-  
-    
       
+      
+        if(items.URLData.length > 0){
+        arraySong.push({
+          musicSrc:items.URLData[0].url,
+          cover:items.URLData[0].img,
+          name:items.URLData[0].title,
+          singer:""    
+    
+        })
+    
+        }else{
+          arraySong.push({
+            musicSrc:Song[0],
+            cover:items.art,
+            name:items?.title,
+            singer:""    
+      
+          })
   
-  
-   
-    reactLocalStorage.setObject("SongData",arraySong)
-
-   return arraySong;
-
-  }
+        }
+        
+    
+     
+      
+        reactLocalStorage.setObject("SongData",arraySong)
+    
+     return arraySong;
+      
+    }
   }
   return (
     <div className="songRoww" key={index} onClick={() =>{

@@ -31,15 +31,17 @@ API.API.MusicDataUser(user,start)
 .then(response=>{
 
 
-setDataSource(response.Data)
-setDataUserSource(response);
 
+ setDataUserSource(response);
+
+ if(response.Data.length == 0) return;
+ setStart(start +1)
+setDataSource(response.Data)
 setItemSource(hadleModify(response.Data[0]))
-//Auth.setItemSongSource(hadleModify(response.Data[0]))
 Auth.setItem(response.Data[0])
 Auth.setSongList(response.Data)
-//Auth.setIndex(index)
-setStart(start +1)
+
+
 
 })
 
@@ -106,7 +108,7 @@ const SearchData = () =>{
   API.API.MusicDataUserScroll(user,0,search)
   .then(response=>{
   
-  if(response.length > 0){ 
+    if(response.length == 0) return;
 setDataSource(response)
 
 
@@ -117,7 +119,7 @@ Auth.setSongList(response)
 //Auth.setIndex(index)
 setStart(start +1)
   
-  }
+  
   
   })
 
@@ -130,12 +132,12 @@ const ScrollData = () =>{
 API.API.MusicDataUserScroll(user,start,search)
 .then(response=>{
 
-if(response.length > 0){ 
+if(response.length == 0) return;
 setDataSource(dataSource.concat(response))
 Auth.setSongList(Auth.SongList.concat(response))
 setStart(start +1)
 
-}
+
 
 })
 }
