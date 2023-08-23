@@ -53,8 +53,10 @@ return(<div style={{ width:"100%",marginTop:30 }}>
          
      
        </div>
+     
+       <a style={{textDecoration:'none'}} href={"/explore/New_Releases"} ><b>ShowAll</b></a>
      </div>
-<a style={{textDecoration:'none'}} href={"/explore/New_Releases"} ><b>ShowAll</b></a>
+
 
 </div>
 

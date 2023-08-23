@@ -56,7 +56,7 @@ return(<div style={{ width:"100%",marginTop:30 }}>
      
        </div>
      </div>
-<a style={{textDecoration:'none'}} href={"/explore/new"} ><b>Show All</b></a>
+<a style={{textDecoration:'none'}} href={"/explore/new"} ><b>ShowAll</b></a>
 
 </div>
 <InfiniteScroll 
