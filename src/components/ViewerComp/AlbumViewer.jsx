@@ -45,16 +45,16 @@ return(<div style={{ width:"100%",marginTop:30 }}>
 
 
 <div style={{paddingLeft:20,paddingRight:20,display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%'}}>
-<div className="body__info">
+<div className="body__info_view">
        
        <div className="body__infoText">
          <strong>Albums</strong>
          
      
        </div>
-       <a style={{textDecoration:'none'}} href={"/explore/Albums"} ><b>ShowAll</b></a>
+       
      </div>
-
+     <a style={{textDecoration:'none'}} href={"/explore/Albums"} ><b>ShowAll</b></a>
 
 </div>
 <InfiniteScroll 
