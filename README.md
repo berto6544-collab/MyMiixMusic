@@ -2,7 +2,7 @@
 MyMiixMusic Upload & Stream Music on MyMiix Music
 
 
-![alt text](src/assets/MusicMymiix%201.png)
+<img width="100%" height="500px" src="/assets/MusicMymiix%201.png" />
 
 ## `Features`
 
