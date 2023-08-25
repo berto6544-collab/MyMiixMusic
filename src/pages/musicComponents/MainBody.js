@@ -51,7 +51,7 @@ const [containerData,setDataSourceContainer] = React.useState(
       <Header setSearch={setSearch} searcch={searcch} Search={Search} spotify={spotify} />
 
 
-      <div className="body__songs">
+      <div className="body__songs" style={{paddingBottom:60}}>
       
         {dataSource != null && dataSource.new_releases.length > 0 ?<NewReleaseViewer dataSource={dataSource.new_releases} dataSourcce={[]} hasMorre={false} />
         

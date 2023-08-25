@@ -2,6 +2,8 @@
 MyMiixMusic Upload & Stream Music on MyMiix Music
 
 
+![alt text](src/assets/MusicMymiix%201.png)
+
 ## `Features`
 
 ### `Post & Share`
