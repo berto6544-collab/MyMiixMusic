@@ -1,5 +1,7 @@
 import React from "react";
 import "../../music-css/Body.css";
+import "../../music-css/DropDownMenu.css";
+
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled"
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -11,11 +13,31 @@ import BodyInfo from "./BodyInfo";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import { Button } from "@mui/material";
 
+import 
+{FacebookShareButton,
+ FacebookIcon,
+ RedditShareButton,
+ RedditIcon,
+ EmailShareButton,
+ EmailIcon,
+ TwitterShareButton,
+ TwitterIcon,
+ PinterestShareButton,
+ PinterestIcon,
+ WhatsappShareButton,
+ WhatsappIcon,
+ TelegramShareButton,
+ TelegramIcon,
+ FacebookMessengerShareButton,
+ FacebookMessengerIcon
+
+} from 'next-share';
+
 
 function Body({dataSource,setItemSource,searcch,setSearch,Search,ScrollData,userData}) {
 const Auth = React.useContext(AuthApi)
 const [index,setIndex] =  React.useState(0);
-
+const [isTrue,setIsTrue] =  React.useState(false);
 
 
 const hadleModify = (items) =>{
@@ -110,7 +132,7 @@ if(userData == null) return null;
       <BodyInfo art={userData.profileimg} searcch={searcch} setSearch={setSearch} Search={Search}  info={'Artist'}  name={userData.username} title={''} />
 
       <div className="body__songs_artists">
-        <div className="body__icons">
+        <div className="body__icons" style={{position:'relative'}}>
           {Auth.playing == false?<PlayCircleFilledIcon
             className="body__shuffle"
             onClick={()=>{
@@ -142,7 +164,59 @@ if(userData == null) return null;
           
          
           {/*<FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />*/}
-          <MoreHorizIcon style={{marginLeft:20}} />
+          <dropdown 
+            
+            
+            
+            >
+
+          <MoreHorizIcon id={"toggle1"}   onClick={()=>setIsTrue(!isTrue)} style={{marginLeft:20,fontSize:35,cursor:'pointer'}} />
+  
+  {isTrue?<ul onBlur={(e)=>{ setIsTrue(false) }}  class="animate ulAnimate">
+    <li onClick={()=>{
+      navigator.clipboard.writeText('https://music.mymiix.com/a/'+dataSource[0].username)
+      setIsTrue(false)
+      
+      }} class="animate">
+        <i style={{fontSize:20,marginRight:-7}} class="fa fa-copy"></i>Copylink</li>
+
+<li class="animate">
+<FacebookShareButton
+      url={'https://music.mymiix.com/a/'+dataSource[0].username}
+  
+>
+  <FacebookIcon size={30} round />
+   Facebook
+</FacebookShareButton>
+</li>
+
+<li class="animate">
+<TwitterShareButton
+      url={'https://music.mymiix.com/a/'+dataSource[0].username}
+     
+>
+  <TwitterIcon size={30} round />
+  Twitter
+</TwitterShareButton>
+
+</li>
+
+<li class="animate">
+<RedditShareButton
+      url={'https://music.mymiix.com/a/'+dataSource[0].username}
+      title={"Come follow "+dataSource[0].username+" MyMiix Music"}
+>
+  <RedditIcon size={30} round />
+   Reddit
+</RedditShareButton>
+
+</li>
+
+  </ul>:null}
+</dropdown>
+         
+          
+
         </div>
 
 <InfiniteScroll 

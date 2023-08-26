@@ -1,0 +1,56 @@
+.float-right{
+    float: right;
+  }
+  .fa{
+   font-size: .8em;
+    line-height: 22px !important;
+  }
+  dropdown{
+     display: inline-block;
+     
+  }
+  dropdown label, dropdown ul li{
+    display: block;
+    width: 200px;
+    background: blue;
+    padding: 15px 20px;
+    
+    
+  }
+  dropdown label:hover, dropdown ul li:hover{
+    background: black;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+  }
+  dropdown label{
+    color: #1ABC9C;
+    border-left: 4px solid #1ABC9C;
+    border-radius: 10px; 
+    z-index: 2;
+  }
+ 
+
+  .ulAnimate{
+    position: absolute;
+    z-index: 2;
+    border-radius: 0.5rem;
+    overflow-x: hidden;
+    
+
+}
+  
+  
+ 
+  
+  .animate{
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    -ms-transition: all .3s;
+    -ms-transition: all .3s;
+    transition: all .3s;  
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden; /* Chrome and Safari */
+    -moz-backface-visibility:hidden; /* Firefox */
+    -ms-backface-visibility:hidden; /* Internet Explorer */
+  }

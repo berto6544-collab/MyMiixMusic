@@ -1,5 +1,6 @@
 import React from "react";
 import "../../music-css/Body.css";
+import "../../music-css/DropDownMenu.css";
 import Header from "./Header";
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
@@ -11,6 +12,25 @@ import {reactLocalStorage} from 'reactjs-localstorage';
 import BodyInfo from "./BodyInfo";
 import Sidebar from "./Sidebar";
 
+import 
+{FacebookShareButton,
+ FacebookIcon,
+ RedditShareButton,
+ RedditIcon,
+ EmailShareButton,
+ EmailIcon,
+ TwitterShareButton,
+ TwitterIcon,
+ PinterestShareButton,
+ PinterestIcon,
+ WhatsappShareButton,
+ WhatsappIcon,
+ TelegramShareButton,
+ TelegramIcon,
+ FacebookMessengerShareButton,
+ FacebookMessengerIcon
+
+} from 'next-share';
 
 function Body({dataSource}) {
 const Auth = React.useContext(AuthApi);
@@ -18,7 +38,7 @@ const Auth = React.useContext(AuthApi);
 
 
 const [index,setIndex] =  React.useState(0);
-
+const [isTrue,setIsTrue] =  React.useState(false);
 
 
 const hadleModify = (items) =>{
@@ -131,7 +151,56 @@ if(dataSource == null) return null;
 
 
           <FavoriteIcon style={{color:dataSource?.following == "0"?"white":"#007bff"}} fontSize="large" />
-          <MoreHorizIcon />
+          <dropdown 
+            
+            
+            
+            >
+
+          <MoreHorizIcon id={"toggle1"}   onClick={()=>setIsTrue(!isTrue)} style={{marginLeft:20,fontSize:35,cursor:'pointer'}} />
+  
+  {isTrue?<ul onBlur={(e)=>{ setIsTrue(false) }}  class="animate ulAnimate">
+    <li onClick={()=>{
+      navigator.clipboard.writeText('https://music.mymiix.com/s/'+dataSource?.uniqId)
+      setIsTrue(false)
+      
+      }} class="animate">
+        <i style={{fontSize:20,marginRight:-7}} class="fa fa-copy"></i>Copylink</li>
+
+<li class="animate">
+<FacebookShareButton
+      url={'https://music.mymiix.com/s/'+dataSource?.uniqId}
+  
+>
+  <FacebookIcon size={30} round />
+   Facebook
+</FacebookShareButton>
+</li>
+
+<li class="animate">
+<TwitterShareButton
+      url={'https://music.mymiix.com/s/'+dataSource?.uniqId}
+     
+>
+  <TwitterIcon size={30} round />
+  Twitter
+</TwitterShareButton>
+
+</li>
+
+<li class="animate">
+<RedditShareButton
+      url={'https://music.mymiix.com/s/'+dataSource?.uniqId}
+      title={dataSource?.title}
+>
+  <RedditIcon size={30} round />
+   Reddit
+</RedditShareButton>
+
+</li>
+
+  </ul>:null}
+</dropdown>
         </div>
 
       {dataSource.SongData.map((item,i)=>{
