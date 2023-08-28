@@ -132,7 +132,7 @@ if(userData == null) return null;
       <BodyInfo art={userData.profileimg} searcch={searcch} setSearch={setSearch} Search={Search}  info={'Artist'}  name={userData.username} title={''} />
 
       <div className="body__songs_artists">
-        <div className="body__icons" style={{position:'relative'}}>
+        <div className="body__icons" style={{position:'relative',flexWrap:'wrap',overflowWrap:'break-word',width:'100%'}}>
           {Auth.playing == false?<PlayCircleFilledIcon
             className="body__shuffle"
             onClick={()=>{
@@ -162,6 +162,10 @@ if(userData == null) return null;
 
           {userData?.following == "0"?<Button variant={'contained'} style={{borderRadius:'3rem',padding:10,paddingLeft:20,paddingRight:20}} onClick={()=>Follow()}>Follow</Button>:<Button variant={'outlined'} style={{borderRadius:'3rem',padding:10,paddingLeft:20,paddingRight:20,color:'white',border:'1px solid white'}} onClick={()=>Follow()}>Following</Button>}
           
+
+          <Button variant={'contained'} style={{borderRadius:'3rem',marginLeft:20,padding:10,paddingLeft:20,paddingRight:20}} onClick={()=>{
+            window.location.href = "https://mymiix.com/@"+dataSource.username+"/subscription?redirect="+window.location.href
+          }} >Subscribe</Button>
          
           {/*<FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />*/}
           <dropdown 
@@ -170,7 +174,7 @@ if(userData == null) return null;
             
             >
 
-          <MoreHorizIcon id={"toggle1"}   onClick={()=>setIsTrue(!isTrue)} style={{marginLeft:20,fontSize:35,cursor:'pointer'}} />
+          <MoreHorizIcon id={"toggle1"}   onClick={()=>setIsTrue(!isTrue)} style={{marginLeft:10,fontSize:35,cursor:'pointer'}} />
   
   {isTrue?<ul onBlur={(e)=>{ setIsTrue(false) }}  class="animate ulAnimate">
     <li onClick={()=>{

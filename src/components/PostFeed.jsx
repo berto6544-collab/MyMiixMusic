@@ -3,7 +3,7 @@ import '../css/Login.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Cookies from 'js-cookie';
-import {FormControl,IconButton} from '@mui/material/';
+import {FormControl,IconButton,Select,MenuItem,OutlinedInput,InputLabel,InputAdornment} from '@mui/material/';
 import {Button, Container} from 'react-bootstrap';
 import {Videocam,Filter,Event,LibraryMusic,Close} from '@mui/icons-material';
 import SmallDialog from '../dialog-components/DialogSmalll';
@@ -457,10 +457,45 @@ const handleClose = () =>{
         
         <ChooseType setDescription={setDescription} setTitle={setTitle} handleClear={handleClear} setTypeFunction={setTypeFunction} />
 
+
+
         {typeFunction != "" && typeFunction == "Upload"?<div style={{width:'100%',padding:10,position:'relative'}}>
         <b>Write Album Title*</b>
           
           <input value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
+          {file != "" && FileArray.length > 0 ?<div style={{width:'100%',display:'flex',flexDirection:'column',marginBlock:'20px'}}>
+  
+  <b style={{color:'white'}}>Choose Public Or Subscribers To See Your Post</b>
+    <FormControl style={{marginTop:10}}  variant="outlined">
+  
+  
+  <Select labelId="label" id="select"  displayEmpty defaultValue={""}  style={{backgroundColor:'white',color:'black'}}  onChange={(value)=>{setContribute(value.target.value) }}>
+    <MenuItem  name={'Contributor'} value="">Public</MenuItem>
+    {<MenuItem name={'Contributor'} value="Contributor">Subscribers</MenuItem>}
+    {<MenuItem name={'Contributor'} value="Donor">Sell Album</MenuItem>}
+   
+  </Select>
+  
+  </FormControl></div>:null}
+  
+  {contributor == "Donor" && file != "" && FileArray.length > 0 ?
+  
+  <FormControl style={{marginTop:10,width:'100%',marginBottom:20,backgroundColor:'transparent',color:'white'}}  variant="outlined">
+           
+            <input
+              value={Amount}
+              style={{padding:10,width:'100%'}}
+              type={'number'}
+              onChange={(value)=>{
+                setAmount(value.target.value)
+                
+                }}
+              
+              
+            />
+          </FormControl>
+              :null }
+        
         <input type={'file'} onChange={handleOnChange} multiple accept='.mp3,.wav,.m4a'  ref={inputRef} style={{display:'none'}} />
         <input type={'file'} onChange={(img)=>{
             setDataURLType(URL.createObjectURL(inputReff.current.files[0]));
@@ -488,6 +523,8 @@ const handleClose = () =>{
         </div>
 
         </div>
+
+        
 
 
         {FileArray.length > 0?<MusicPost DataURLType={DataURLType} 
@@ -561,7 +598,7 @@ const handleClose = () =>{
         </FormControl>
 
 
-
+        
 
       
         </div>

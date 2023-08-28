@@ -7,6 +7,9 @@
   }
   dropdown{
      display: inline-block;
+     height: 40px;
+     position: relative;
+     overflow-wrap: normal;
      
   }
   dropdown label, dropdown ul li{

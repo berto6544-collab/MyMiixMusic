@@ -114,16 +114,18 @@ const skipNext = () =>{
     Auth.setItemSongSource(hadleModify(Auth.SongList[Auth.index+1]))
    
     Auth.setPlaying(true)
-    
+  
     
 
 
   }else{
 
   
+    Auth.setSongIndex(Auth.songIndex+1)
     Auth.setPlaying(true)
     setPlayingg(true)
-    Auth.setSongIndex(Auth.songIndex+1)
+    Auth.setItemSongSource(itemSource)
+   Auth.setItemSongSource(...itemSource[Auth.songIndex+1])
 
   
 }
@@ -145,6 +147,8 @@ const skipPrevious = () =>{
     Auth.setPlaying(true)
     setPlayingg(true)
     Auth.setSongIndex(Auth.songIndex-1)
+    Auth.setItemSongSource(itemSource)
+    Auth.setItemSongSource(...itemSource[Auth.songIndex-1])
   
 
   }
@@ -385,7 +389,7 @@ return(<div className="songRow" style={{marginLeft:0,width:'100%'}} key={i}>
       onVolumeChange={handleOnVolumeChange}
       volume={sound}
       
-      loop={loop} progressInterval={Auth.currentTime} playing={Auth.playing} playsInline={true} url={itemSource[Auth.songIndex]?.musicSrc} >
+      loop={loop} progressInterval={Auth.currentTime} playing={Auth.playing} playsInline={true} url={itemSource[Auth.songIndex].musicSrc} >
         
        
 
@@ -485,9 +489,10 @@ return(<div className="songRow" style={{marginLeft:0,width:'100%'}} key={i}>
   return(<div className="songRow" style={{marginLeft:0,width:'100%'}} key={i} onClick={() =>{
     
     Auth.setIndex(Auth.index)
+    Auth.setSongIndex(i)
    Auth.setItemSongSource(itemSource)
    Auth.setPlaying(true)
-   Auth.setSongIndex(i)
+ 
 
 
    }}>

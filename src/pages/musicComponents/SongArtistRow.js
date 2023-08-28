@@ -2,6 +2,8 @@ import React from "react";
 import "../../music-css/SongRow.css";
 import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';
+import { Button } from "@mui/material";
+
 
 function SongRow({item,dataSource,setItemSource,index,setIndex}) {
   const Auth = React.useContext(AuthApi)
@@ -71,7 +73,7 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
 
 
   return (
-    <div className="songRow" key={index} onClick={() =>{
+    <div className="songRow"style={{width:'100%',justifyContent:'space-between'}} key={index} onClick={() =>{
      //Auth.setItems(item)
      //setItemSource(hadleModify(item))
      setIndex(index)
@@ -101,6 +103,7 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
      }
 
     }}>
+      <div style={{display:'flex',alignItems:'center'}}>
       <div className={'songRow__album'} style={{position:'relative',fontSize:40}}>
       {index == Auth.index?<i class="fa fa-play-circle play" style={{position:'absolute',bottom:'10%',left:'10%',color:'rgba(0,0,0,0.8)'}}></i>:null}
       <img className="songRow__album" src={item.SongData.length > 0?item.art:item.URLData.length > 0 ?item.URLData[0].img:item?.art||item?.postimg.split(',')[0]} alt="" />
@@ -108,6 +111,14 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
       <div className="songRow__info">
         <h1>{item.SongData.length > 0? item.SongData[0].name:item.title}</h1>
         <p>{item.SongData.length > 0? item.SongData[0].artist:item.types}</p>
+      </div>
+      </div>
+      <div className="body__icons" style={{display:'flex',zIndex:2,alignItems:'center',flexDirection:'column',justifySelf:'flex-end'}}>
+      {item.stat == "Donor" && item.DonorStatCount == 0? <h3 >${item.price}</h3>:null}
+ {item.stat == "Donor" && item.DonorStatCount == 0 ? <Button variant={'contained'} onClick={()=>{
+  window.location.href = "https://mymiix.com/post/payment/"+item.uniqId+"?redirect="+window.location.href
+ }} >Buy</Button>:null}
+ 
       </div>
     </div>
   );

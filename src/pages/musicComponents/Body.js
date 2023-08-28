@@ -2,6 +2,7 @@ import React from "react";
 import "../../music-css/Body.css";
 import "../../music-css/DropDownMenu.css";
 import Header from "./Header";
+
 import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import PauseCircleFilledIcon from "@mui/icons-material/PauseCircleFilled";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -31,6 +32,7 @@ import
  FacebookMessengerIcon
 
 } from 'next-share';
+import { Button } from "@mui/material";
 
 function Body({dataSource}) {
 const Auth = React.useContext(AuthApi);
@@ -102,7 +104,11 @@ if(dataSource == null) return null;
 
       <div className="body__songs_artists">
         
+      
+        
         <div className="body__icons">
+
+        
           {Auth.playing == false?<PlayCircleFilledIcon
             className="body__shuffle"
             onClick={()=>{
@@ -151,6 +157,11 @@ if(dataSource == null) return null;
 
 
           <FavoriteIcon style={{color:dataSource?.following == "0"?"white":"#007bff"}} fontSize="large" />
+
+          {dataSource.stat == "Contributor" && dataSource.DonorStatCount == 0 ? <Button variant={'contained'} onClick={()=>{
+            window.location.href = "https://mymiix.com/@"+dataSource.username+"/subscription?redirect="+window.location.href
+          }} >Subscribe</Button>:null}
+
           <dropdown 
             
             
@@ -201,7 +212,17 @@ if(dataSource == null) return null;
 
   </ul>:null}
 </dropdown>
+
+
         </div>
+        
+        <div className="body__icons" style={{display:'flex',alignItems:'center'}}>
+      {dataSource.stat == "Donor" && dataSource.DonorStatCount == 0? <h3 style={{marginLeft:50,marginRight:20}}>${dataSource.price}</h3>:null}
+ {dataSource.stat == "Donor" && dataSource.DonorStatCount == 0 ? <Button variant={'contained'} onClick={()=>{
+  window.location.href = "https://mymiix.com/post/payment/"+dataSource.uniqId+"?redirect="+window.location.href
+ }} >Buy</Button>:null}
+ 
+      </div>
 
       {dataSource.SongData.map((item,i)=>{
 
