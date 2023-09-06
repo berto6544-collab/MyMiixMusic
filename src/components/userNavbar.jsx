@@ -204,11 +204,15 @@ const onClicks = () =>{
             </div>:<div className="rightContainer">
            
             
-            {window.location.href.match(/(donate)/gi)?null:<a  style={{color:'white',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'rgb(0, 123, 255)',borderRadius:30 }} onClick={()=>setShowDonate(true)}>Donate</a>}
+            {<a  style={{color:'rgb(0, 123, 255)',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'white',borderRadius:30 }} onClick={()=>{
+
+              window.location.href = "https://mymiix.com/signup?redirect=https://music.mymiix.com"
+
+            }}>Signup</a>}
             
             
            
-            <a style={{color:'rgb(0, 123, 255)',fontSize:15,padding:10,marginRight:15,paddingLeft:15,paddingRight:15,border:'1px solid rgb(0, 123, 255)',borderRadius:30 }} href={'https://mymiix.com/signin?redirect='+window.location.href}>Sign in</a>
+            <a style={{color:'white',fontSize:15,padding:10,marginRight:15,paddingLeft:15,paddingRight:15,backgroundColor:'rgb(0, 123, 255)',borderRadius:30 }} href={'https://mymiix.com/signin?redirect='+window.location.href}>Signin</a>
             
            
             </div>}

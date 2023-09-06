@@ -471,11 +471,13 @@ const handleClose = () =>{
   
   <Select labelId="label" id="select"  displayEmpty defaultValue={""}  style={{backgroundColor:'white',color:'black'}}  onChange={(value)=>{setContribute(value.target.value) }}>
     <MenuItem  name={'Contributor'} value="">Public</MenuItem>
-    {<MenuItem name={'Contributor'} value="Contributor">Subscribers</MenuItem>}
-    {<MenuItem name={'Contributor'} value="Donor">Sell Album</MenuItem>}
+    {props.userData.length > 0 && props.userData[0].AccountToken != ""?<MenuItem name={'Contributor'} value="Contributor">Subscribers</MenuItem>:null}
+    {props.userData.length > 0 && props.userData[0].AccountToken != ""?<MenuItem name={'Contributor'} value="Donor">Sell Album</MenuItem>:null}
    
   </Select>
-  
+
+
+
   </FormControl></div>:null}
   
   {contributor == "Donor" && file != "" && FileArray.length > 0 ?
@@ -582,7 +584,7 @@ const handleClose = () =>{
 
           </div>
           
-
+          
   
 
 

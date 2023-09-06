@@ -164,7 +164,7 @@ if(userData == null) return null;
           
 
           <Button variant={'contained'} style={{borderRadius:'3rem',marginLeft:20,padding:10,paddingLeft:20,paddingRight:20}} onClick={()=>{
-            window.location.href = "https://mymiix.com/@"+dataSource.username+"/subscription?redirect="+window.location.href
+            window.location.href = "https://mymiix.com/@"+userData.username+"/subscription?redirect="+window.location.href
           }} >Subscribe</Button>
          
           {/*<FavoriteIcon style={{color:userData?.following == "0"?"white":"#007bff"}} fontSize="large" />*/}
