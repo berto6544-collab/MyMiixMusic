@@ -206,9 +206,9 @@ const onClicks = () =>{
             
             {<a  style={{color:'rgb(0, 123, 255)',fontSize:15,padding:10,marginRight:5,paddingLeft:15,paddingRight:15,backgroundColor:'white',borderRadius:30 }} onClick={()=>{
 
-              window.location.href = "https://mymiix.com/signup?redirect=https://music.mymiix.com"
+              window.location.href = "https://mymiix.com/signup?redirect=https://music.mymiix.com/upload"
 
-            }}>Signup</a>}
+            }}>upload</a>}
             
             
            
