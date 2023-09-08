@@ -47,7 +47,7 @@ const hadleModify = (items) =>{
   
     
     arraySong.push({
-      musicSrc:post,
+      musicSrc:Song[ind],
       cover:items.art,
       name:items.SongData[ind].name,
       singer:items.SongData[ind].artist    

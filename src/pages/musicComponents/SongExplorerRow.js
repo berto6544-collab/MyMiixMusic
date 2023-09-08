@@ -17,7 +17,7 @@ function SongRow({item,dataSource,setItemSource,q,index,setIndex}) {
     
       
       arraySong.push({
-        musicSrc:Song[index],
+        musicSrc:Song[ind],
         cover:items.art,
         name:post.name,
         singer:post.artist    

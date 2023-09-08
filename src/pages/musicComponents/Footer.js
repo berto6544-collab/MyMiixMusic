@@ -22,7 +22,8 @@ const Auth = React.useContext(AuthApi)
   
 
 
-  const [songIndex,setsongIndex] = React.useState(0);
+ 
+  const [songUrl,setSongUrl] = React.useState("");
   const [playingg,setPlayingg] = React.useState(playing);
   //const [currentTime, setCurrentTime] = useState(0);
 //const [duration, setDuration] = useState(0);
@@ -52,7 +53,7 @@ const hadleModify = (items) =>{
   
     
     arraySong.push({
-      musicSrc:post,
+      musicSrc:Song[ind],
       cover:items.art,
       name:items.SongData[ind].name,
       singer:items.SongData[ind].artist    
@@ -95,7 +96,7 @@ const hadleModify = (items) =>{
       reactLocalStorage.set("type","normal")
      }
     
-  
+  console.log(arraySong)
   
    return arraySong;
     
@@ -120,13 +121,18 @@ const skipNext = () =>{
 
   }else{
 
-  
-    Auth.setSongIndex(Auth.songIndex+1)
+  var songIndex = Auth.songIndex+1
+    Auth.setSongIndex(songIndex )
+   
+   
+    //Auth.setItemSongSource(...itemSource[songIndex])
+    Auth.setItemSongSource([...itemSource])
+    
+    
+   
     Auth.setPlaying(true)
     setPlayingg(true)
-    Auth.setItemSongSource(itemSource)
-   Auth.setItemSongSource(...itemSource[Auth.songIndex+1])
-
+   
   
 }
 
@@ -144,12 +150,13 @@ const skipPrevious = () =>{
 
 
   }else{
+    var songIndex = Auth.songIndex+1
     Auth.setPlaying(true)
     setPlayingg(true)
-    Auth.setSongIndex(Auth.songIndex-1)
-    Auth.setItemSongSource(itemSource)
-    Auth.setItemSongSource(...itemSource[Auth.songIndex-1])
+    Auth.setSongIndex(songIndex)
   
+  
+    Auth.setItemSongSource([...itemSource])
 
   }
 

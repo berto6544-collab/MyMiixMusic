@@ -2,7 +2,7 @@ import React from "react";
 import "../../music-css/SongRow.css";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import AuthApi from "../../components/AuthApi";
-
+//reactLocalStorage.setObject("SongData",arraySong)
 function SongRow({item,dataSource,index,setIndex}) {
   const Auth = React.useContext(AuthApi)
 
@@ -16,7 +16,7 @@ function SongRow({item,dataSource,index,setIndex}) {
   
     
     arraySong.push({
-      musicSrc:Song[index],
+      musicSrc:Song[ind],
       cover:items.art,
       name:post.name,
       singer:post.artist    
