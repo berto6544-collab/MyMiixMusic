@@ -1,9 +1,7 @@
 import React from "react";
 import "../../music-css/Body.css";
 import Header from "./Header";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 import SongRow from "./SongExplorerRow";
 import AuthApi from "../../components/AuthApi";
 import {reactLocalStorage} from 'reactjs-localstorage';

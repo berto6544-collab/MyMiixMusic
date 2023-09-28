@@ -1,16 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {reactLocalStorage} from 'reactjs-localstorage';
-import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
-import RepeatIcon from "@mui/icons-material/Repeat";
-import VolumeDownIcon from "@mui/icons-material/VolumeDown";
-import VolumeMuteIcon from "@mui/icons-material/VolumeMute";
-import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
-import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import "../../music-css/Footer.css";
-import { Grid, Slider } from "@mui/material";
 import AuthApi from "../../components/AuthApi";
 import ReactSpotify from 'react-spotify-player';
 import ReactPlayer from 'react-player';

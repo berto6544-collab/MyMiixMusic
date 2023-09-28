@@ -91,6 +91,11 @@ const hadleModify = (items) =>{
       reactLocalStorage.set("type","Youtube")
      }
 
+     else if(items?.types == "Spotify"){
+
+     
+    }
+
      else{
       Auth.setType("normal")
       reactLocalStorage.set("type","normal")

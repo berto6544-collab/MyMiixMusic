@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "MyMiixMusic",
+  "name": "Stream Music through MyMiix Music",
   "icons": [
     {
       "src": "favicon.ico",

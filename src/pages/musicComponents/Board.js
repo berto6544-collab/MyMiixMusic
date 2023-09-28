@@ -63,7 +63,7 @@ const Search = () =>{
         <Sidebar />
         <Body setSearch={setSearch} searcch={search} Search={Search} spotify={spotify} dataSource={dataSource} />
       </div>
-      <Footer spotify={spotify} itemSource={ItemSourceSong} index={index} />
+      
     </div>
   );
 }

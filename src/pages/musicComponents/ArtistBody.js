@@ -22,14 +22,9 @@ import
  EmailIcon,
  TwitterShareButton,
  TwitterIcon,
- PinterestShareButton,
- PinterestIcon,
  WhatsappShareButton,
  WhatsappIcon,
- TelegramShareButton,
- TelegramIcon,
- FacebookMessengerShareButton,
- FacebookMessengerIcon
+ 
 
 } from 'next-share';
 
