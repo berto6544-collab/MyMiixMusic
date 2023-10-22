@@ -13,7 +13,7 @@ import "../../music-css/Footer.css";
 import { Grid, Slider } from "@mui/material";
 import AuthApi from "../../components/AuthApi";
 import ReactPlayer from 'react-player';
-
+import AdsenseHorizontal from '../../components/Adsense-Component/AdsenseHorizontal';
 function Footer({ spotify,itemSource,playing,setPlaying}) {
 
   
@@ -522,8 +522,18 @@ return(<div className="songRow" style={{marginLeft:0,width:'100%'}} key={i}>
 </div>
 
 
+
 </div>
-  
+{/*<ins  className={"adsbygoogle"}
+      style={{display:'block',overflow:'hidden',position:'absolute',bottom:0,backgroundColor:'black',zIndex:1, width:"100%", height:20}}
+      data-ad-client={"ca-pub-6989684433220866"}
+      data-ad-slot={"8677268734"}
+      data-ad-format={"auto"}
+     
+      data-full-width-responsive={true}
+     
+      
+      />*/}
 
     </div>
   );

@@ -184,7 +184,10 @@ React.useEffect(() =>{
         
          
         
-         {<div style={{width:'100%'}}> {Type == "Spotify" || Type == "spotify"?<FooterSpotify itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />}</div>} 
+         {<div style={{width:'100%'}}>
+       
+           {Type == "Spotify" || Type == "spotify"?<FooterSpotify itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />}</div>} 
+        
         </AuthApi.Provider>
         </Elements>
 

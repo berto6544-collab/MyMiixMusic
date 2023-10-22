@@ -658,7 +658,7 @@ setShowDate(false)
        
     
     if(postimage == ""){
-    if (word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?(music\.)?youtube\.com\/([a-zA-Z0-9_]+)/) && typeFunction == "Youtube"){
+    if (word.match(/http(?:s?):\/\/(?:www\.)?(?:m\.)?(?:music\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/) && typeFunction == "Youtube"){
       //console.log(word);
       return(<div>
         <PreviewPost setDatta={Data} url={word} />
@@ -767,7 +767,7 @@ setShowDate(false)
     }
     
     else if(word.match(/http(?:s)?:\/\/?([a-zA-Z0-9_]+)\.?([a-zA-Z0-9_]+)/) && 
-    !dataBody.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?youtube\.com\/([a-zA-Z0-9_]+)/gi) && 
+    !dataBody.match(/http(?:s?):\/\/(?:www\.)?(?:m\.)?(?:music\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/gi) && 
     !dataBody.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?soundcloud\.com\/([a-zA-Z0-9_]+)/gi) && 
     !dataBody.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?twitch\.tv\/([a-zA-Z0-9_]+)/gi) &&
     !dataBody.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?discord\.com\/widget/gi) &&
@@ -809,7 +809,7 @@ setShowDate(false)
   
     
     if(postimage == ""){
-    if (word.match(/http(?:s)?:\/\/(?:www\.)?youtube\.com\/([a-zA-Z0-9_]+)/)){
+    if (word.match(/http(?:s?):\/\/(?:www\.)?(?:m\.)?(?:music\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/)){
       
     }
     
