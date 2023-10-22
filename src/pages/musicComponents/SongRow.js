@@ -90,7 +90,7 @@ function SongRow({item,dataSource,index,setIndex}) {
 
       Auth.setType("Youtube")
       reactLocalStorage.set("type","Youtube")
-      Auth.setExpand(true)
+      //Auth.setExpand(true)
 
      }
      

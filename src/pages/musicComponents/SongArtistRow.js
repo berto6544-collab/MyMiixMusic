@@ -88,7 +88,7 @@ function SongRow({item,dataSource,setItemSource,index,setIndex}) {
 
       if(item.types == "spotify" || item.types == "Spotify"){
         Auth.setType("Spotify")
-        Auth.setExpand(true);
+        //Auth.setExpand(true);
         reactLocalStorage.set("type","Spotify")
         
       }

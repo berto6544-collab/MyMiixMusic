@@ -173,7 +173,7 @@ const handlePlay = () => {
   
   Auth.setPlaying(true);
   if(Auth.Type == "Youtube"){
-    Auth.setExpand(true)
+    //Auth.setExpand(true)
   }
   //audioRef.current.play();
 };
