@@ -99,6 +99,7 @@ function PostFeed(props) {
     
     const [userAuthAccount,setAuth] = React.useState('');
     const inputRef = React.useRef()
+    const inputRefTitle = React.useRef(null)
     const inputReff = React.useRef()
     const iframeReff = React.useRef()
     const CarourselReff = React.useRef()
@@ -556,7 +557,7 @@ const handleClose = () =>{
         <div style={{width:'100%',padding:10}}>
           <b>Write Title*</b>
           
-          <input value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
+          <input ref={inputRefTitle} value={title} onChange={(e)=>setTitle(e.target.value)} style={{width:'100%',padding:10,marginBottom:30}} />
           <b>Add {typeFunction} Link*</b>
           
           <input value={descript} onChange={(e)=>setDescription(e.target.value)} style={{width:'100%',padding:10}} />
@@ -580,7 +581,7 @@ const handleClose = () =>{
 
           <b>Preview</b>
 
-          {UrlForMedia(descript,fileName,setURLARRAY,typeFunction,iframeReff)}
+          {UrlForMedia(descript,fileName,setURLARRAY,typeFunction,iframeReff,setTitle,inputRefTitle)}
 
           </div>
           
@@ -639,7 +640,7 @@ setShowDate(false)
 
 
 
-    function UrlForMedia(dataBody,postimage,Data,typeFunction,iframeReff) {
+    function UrlForMedia(dataBody,postimage,Data,typeFunction,iframeReff,setTitle,inputRefTitle) {
 
      
       if(dataBody != undefined){
@@ -661,7 +662,7 @@ setShowDate(false)
     if (word.match(/http(?:s?):\/\/(?:www\.)?(?:m\.)?(?:music\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-\_]*)(&(amp;)?‌​[\w\?‌​=]*)?/) && typeFunction == "Youtube"){
       //console.log(word);
       return(<div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <Player controls={true} autoPlay={true} playing={true} light={true} style={{width:'100%', height:360}} width={'100%'} height={'360px'}  className={'react-player'} url={word} ></Player>
       
       </div>)
@@ -671,7 +672,7 @@ setShowDate(false)
     else if(word.match(/http(?:s)?:\/\/(?:www\.)?(?:m\.)?soundcloud\.com\/([a-zA-Z0-9_]+)/) && typeFunction == "Soundcloud") {
     
       return(<div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <Player controls={true} autoPlay={true} playing={true} light={true} style={{width:'100%', height:360}} width={'100%'} height={'360px'}  className={'react-player'} url={word} ></Player>
       
       </div>)
@@ -687,7 +688,7 @@ setShowDate(false)
         var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?track\//,'');
       return (
       <div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <iframe 
       style={{width:'100%',height:250,borderRadius:10}} 
       ref={iframeReff}
@@ -713,7 +714,7 @@ setShowDate(false)
     
         var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?album\//,'');
       return (<div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <iframe 
         
       style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/album/'+U+''} ></iframe></div>)
@@ -728,7 +729,7 @@ setShowDate(false)
     
         var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?album\//,'');
       return (<div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <iframe 
       style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/album/'+U+''} ></iframe></div>)
       }
@@ -742,7 +743,7 @@ setShowDate(false)
     
         var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?playlist\//,'');
       return (<div>
-        <PreviewPost setDatta={Data} url={word} />
+        <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
         <iframe 
        style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/playlist/'+U+''} ></iframe></div>)
       }
@@ -758,7 +759,7 @@ setShowDate(false)
         var U =word.replace(/http(?:s)?:\/\/(?:open\.)?spotify\.com\/?embed\/?playlist\//,'');
       return (
       <div>
-      <PreviewPost setDatta={Data} url={word} />
+      <PreviewPost setDatta={Data} url={word} setTitle={setTitle} inputRefTitle={inputRefTitle} />
       <iframe 
       style={{width:'100%',height:250,borderRadius:10}} frameBorder="0" src={'https://open.spotify.com/embed/playlist/'+U+''} ></iframe>
       </div>)
