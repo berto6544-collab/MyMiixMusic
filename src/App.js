@@ -13,7 +13,6 @@ import Footer from './pages/musicComponents/Footer';
 import FooterSpotify from './pages/musicComponents/FooterSpotify';
 import {loadStripe} from '@stripe/stripe-js';
 import API from './components/API/API';
-import SocketUtils from './Utility/SocketUtils';
 import {
  Elements,
 } from '@stripe/react-stripe-js';

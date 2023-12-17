@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../music-css/Footer.css";
 import AuthApi from "../../components/AuthApi";
-import ReactSpotify from 'react-spotify-player';
+
 import ReactPlayer from 'react-player';
 
 function FooterSpotify({ spotify,itemSource,playing,setPlaying}) {

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {reactLocalStorage} from 'reactjs-localstorage';
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleFilled";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
-import ShuffleIcon from "@mui/icons-material/Shuffle";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import VolumeDownIcon from "@mui/icons-material/VolumeDown";
 import VolumeMuteIcon from "@mui/icons-material/VolumeMute";
@@ -13,7 +12,7 @@ import "../../music-css/Footer.css";
 import { Grid, Slider } from "@mui/material";
 import AuthApi from "../../components/AuthApi";
 import ReactPlayer from 'react-player';
-import AdsenseHorizontal from '../../components/Adsense-Component/AdsenseHorizontal';
+//import AdsenseHorizontal from '../../components/Adsense-Component/AdsenseHorizontal';
 function Footer({ spotify,itemSource,playing,setPlaying}) {
 
   
@@ -25,23 +24,13 @@ const Auth = React.useContext(AuthApi)
  
   const [songUrl,setSongUrl] = React.useState("");
   const [playingg,setPlayingg] = React.useState(playing);
-  //const [currentTime, setCurrentTime] = useState(0);
-//const [duration, setDuration] = useState(0);
-const [sound, setSound] = useState(1);
-const [loop, setLoop] = useState(false);
-const [expand, setExpand] = useState(false);
-const [isMuted, setisMuted] = useState(false);
-const [expandPlaylist, setExpandPlaylist] = useState(false);
+
+const [sound, setSound] = React.useState(1);
+const [loop, setLoop] = React.useState(false);
+const [expand, setExpand] = React.useState(false);
+const [isMuted, setisMuted] = React.useState(false);
+const [expandPlaylist, setExpandPlaylist] = React.useState(false);
   const audioRef = React.useRef(null);
-
-React.useEffect(()=>{
-
-
-
- 
-
-},[])
-
 
 
 const hadleModify = (items) =>{
@@ -360,6 +349,8 @@ return(<div className="songRow" style={{marginLeft:0,width:'100%'}} key={i}>
 </div>
 
   );
+
+  
   return (
     <div className={ !Auth.expand?"footer": "expand"}>
 
