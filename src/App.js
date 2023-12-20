@@ -10,6 +10,7 @@ import * as Themes from './Utility/Theme';
 import NavBar from './components/Navbar';
 import NavBarUser from './components/userNavbar';
 import Footer from './pages/musicComponents/Footer';
+import FooterTest from './pages/musicComponents/FooterTest';
 import FooterSpotify from './pages/musicComponents/FooterSpotify';
 import {loadStripe} from '@stripe/stripe-js';
 import API from './components/API/API';
@@ -185,7 +186,7 @@ React.useEffect(() =>{
         
          {<div style={{width:'100%'}}>
        
-           {Type == "Spotify" || Type == "spotify"?<FooterSpotify itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />:<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />}</div>} 
+           {Type == "Spotify" && ItemSongSource.length >0 || Type == "spotify" && ItemSongSource.length >0 ?<FooterSpotify itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />: ItemSongSource.length > 0 ?<Footer itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />: <FooterTest itemSource={ItemSongSource} index={index} setPlaying={setPlaying} playing={playing} />}</div>} 
         
         </AuthApi.Provider>
         </Elements>
