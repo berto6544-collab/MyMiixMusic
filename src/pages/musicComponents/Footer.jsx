@@ -274,7 +274,7 @@ function formatDuration(durationSeconds) {
       volume={sound}
       
       loop={loop} 
-      progressInterval={1000}
+      //progressInterval={1000}
       onProgress={handleTimeUpdate}
       playing={Auth.playing} 
       playsInline={true} 
