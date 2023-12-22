@@ -258,7 +258,7 @@ function formatDuration(durationSeconds) {
         style={{display:Auth.Type == "Youtube" && Auth.expand?"block":'none',border:0}}
       
 
-     // onProgress={handleTimeUpdate}
+     
       
       autoPlay={Auth.playing} 
       ref={audioRef} 
@@ -274,7 +274,7 @@ function formatDuration(durationSeconds) {
       volume={sound}
       
       loop={loop} 
-      //progressInterval={1000}
+     
       onProgress={handleTimeUpdate}
       playing={Auth.playing} 
       playsInline={true} 
