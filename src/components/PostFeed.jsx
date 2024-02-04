@@ -165,6 +165,15 @@ function PostFeed(props) {
 
 const handleOnChange = async(img) =>{
 
+  for (var i = 0; i < img.target.files.length; i++) {
+    if(img.target.files[i].type.match('audio.*')){
+  
+    }else{
+      alert('Upload audios only')
+    return
+    }
+  }
+
   if(img.target.files.length <= 10 ){
 
     let pushSongName = [];
@@ -501,6 +510,13 @@ const handleClose = () =>{
         
         <input type={'file'} onChange={handleOnChange} multiple accept='.mp3,.wav,.m4a'  ref={inputRef} style={{display:'none'}} />
         <input type={'file'} onChange={(img)=>{
+if(img.target.files[0].type.match('image.*')){
+
+}else{
+  alert('Upload album cover only')
+return
+}
+
             setDataURLType(URL.createObjectURL(inputReff.current.files[0]));
             setDataFileType(inputReff.current.files[0])
            

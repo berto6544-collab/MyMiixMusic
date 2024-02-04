@@ -50,6 +50,15 @@ function MusicPost({DataURLType,inputReff,showForm,handleClear,FileSample,songNa
    
    
    {<input id={'replaceFile'+index} key={index} accept={'.mp3,.m4a,.wav'}  style={{display:'none'}} type={'file'} multiple={false} onChange={(img)=>{
+
+for (var i = 0; i < img.target.files.length; i++) {
+  if(img.target.files[i].type.match('audio.*')){
+
+  }else{
+    alert('Upload audios only')
+  return
+  }
+}
    
    let pushSongName = [];
          
